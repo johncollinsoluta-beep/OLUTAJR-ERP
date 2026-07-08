@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - OLUTAJR ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg0: #08090d;
+            --bg1: #0d0f14;
+            --bg2: #12151c;
+            --bg3: #181c26;
+            --acc: #00c978;
+            --acc2: #00e888;
+            --t1: #e2e5eb;
+            --t2: #8992a8;
+            --t3: #505972;
+            --r: 10px;
+            --sh: 0 4px 24px rgba(0,0,0,.35);
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg0);
+            color: var(--t1);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--acc), var(--acc2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: var(--t2);
+            font-size: 14px;
+        }
+
+        .qr-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .qr-panel {
+            background: linear-gradient(135deg, var(--bg2), var(--bg3));
+            border: 1px solid rgba(0, 201, 120, 0.1);
+            border-radius: var(--r);
+            padding: 30px;
+            box-shadow: var(--sh);
+        }
+
+        .qr-panel h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--acc);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qr-panel i {
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: var(--t2);
+            margin-bottom: 8px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 201, 120, 0.2);
+            border-radius: 6px;
+            color: var(--t1);
+            font-family: inherit;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--acc);
+            background: rgba(0, 201, 120, 0.05);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--acc), var(--acc2));
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 201, 120, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.secondary {
+            background: rgba(0, 201, 120, 0.1);
+            color: var(--acc);
+            border: 1px solid var(--acc);
+        }
+
+        .qr-display {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 201, 120, 0.2);
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-display img {
+            max-width: 250px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .qr-display.empty {
+            color: var(--t3);
+            font-size: 14px;
+        }
+
+        .qr-data {
+            font-size: 12px;
+            color: var(--t2);
+            word-break: break-all;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            background: var(--acc);
+            color: #000;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background: var(--acc2);
+            transform: scale(1.05);
+        }
+
+        .batch-items {
+            max-height: 400px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 15px;
+        }
+
+        .batch-item {
+            background: rgba(0, 201, 120, 0.1);
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .batch-item img {
+            width: 60px;
+            height: 60px;
+            background: white;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .batch-item-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .batch-item-info p {
+            margin: 2px 0;
+            color: var(--t2);
+        }
+
+        .batch-item-info strong {
+            color: var(--t1);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .status {
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .status.success {
+            background: rgba(0, 201, 120, 0.1);
+            color: var(--acc);
+            border: 1px solid var(--acc);
+        }
+
+        .status.error {
+            background: rgba(255, 71, 87, 0.1);
+            color: #ff4757;
+            border: 1px solid #ff4757;
+        }
+
+        .status.loading {
+            background: rgba(74, 144, 247, 0.1);
+            color: #4a90f7;
+            border: 1px solid #4a90f7;
+        }
+
+        @media (max-width: 768px) {
+            .qr-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--acc);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-qrcode"></i> QR Code Generator</h1>
+            <p>Generate QR codes for products, transactions, receipts, and more</p>
+        </div>
+
+        <div class="qr-grid">
+            <!-- Single QR Code Generator -->
+            <div class="qr-panel">
+                <h2><i class="fas fa-cube"></i> Single QR Code</h2>
+                <form id="singleQRForm">
+                    <div class="form-group">
+                        <label>QR Code Type</label>
+                        <select id="qrType">
+                            <option value="product">Product</option>
+                            <option value="receipt">Receipt</option>
+                            <option value="customer">Customer</option>
+                            <option value="transaction">Transaction</option>
+                            <option value="custom">Custom Data</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label id="field1Label">Product ID</label>
+                        <input type="text" id="field1" placeholder="Enter product ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label id="field2Label">Product Name</label>
+                        <input type="text" id="field2" placeholder="Enter product name">
+                    </div>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-magic"></i> Generate QR Code
+                    </button>
+                </form>
+
+                <div id="singleQRResult" class="qr-display empty" style="margin-top: 20px;">
+                    <p>QR code will appear here</p>
+                </div>
+            </div>
+
+            <!-- QR Code Display -->
+            <div class="qr-panel">
+                <h2><i class="fas fa-image"></i> Generated QR Code</h2>
+                <div id="qrDisplayArea" class="qr-display empty">
+                    <p>Generate a QR code to display here</p>
+                </div>
+                <div id="qrDataDisplay" class="qr-data" style="display: none;"></div>
+                <button id="downloadBtn" class="download-btn" style="display: none; width: 100%; margin-top: 15px;">
+                    <i class="fas fa-download"></i> Download QR Code
+                </button>
+            </div>
+        </div>
+
+        <!-- Batch QR Code Generator -->
+        <div class="qr-panel">
+            <h2><i class="fas fa-layer-group"></i> Batch QR Code Generator</h2>
+            <p style="color: var(--t2); font-size: 12px; margin-bottom: 20px;">Generate multiple QR codes at once (one per line)</p>
+            
+            <div class="form-group">
+                <label>Data (one per line)</label>
+                <textarea id="batchData" placeholder="Product-001&#10;Product-002&#10;Product-003"></textarea>
+            </div>
+            
+            <button id="generateBatchBtn" class="btn">
+                <i class="fas fa-layer-group"></i> Generate Batch QR Codes
+            </button>
+
+            <div id="batchResults" class="batch-items" style="display: none;"></div>
+            <div id="batchStatus" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+
+        // Single QR Code Generator
+        document.getElementById('qrType').addEventListener('change', function() {
+            const labels = {
+                product: ['Product ID', 'Product Name'],
+                receipt: ['Receipt ID', 'Amount'],
+                customer: ['Customer ID', 'Customer Name'],
+                transaction: ['Transaction ID', 'Details'],
+                custom: ['Data', 'Additional Info (optional)']
+            };
+            const selected = labels[this.value];
+            document.getElementById('field1Label').textContent = selected[0];
+            document.getElementById('field2Label').textContent = selected[1];
+            document.getElementById('field1').placeholder = `Enter ${selected[0].toLowerCase()}`;
+            document.getElementById('field2').placeholder = `Enter ${selected[1].toLowerCase()}`;
+        });
+
+        document.getElementById('singleQRForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const type = document.getElementById('qrType').value;
+            const field1 = document.getElementById('field1').value;
+            const field2 = document.getElementById('field2').value;
+
+            let data = field1;
+            if (type !== 'custom') {
+                data = `${type.toUpperCase()}|${field1}|${field2}`;
+            } else {
+                data = field1;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/generate-qr`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    displayQRCode(result.qr_code, result.data);
+                } else {
+                    showStatus('error', 'Failed to generate QR code');
+                }
+            } catch (error) {
+                showStatus('error', 'Error: ' + error.message);
+            }
+        });
+
+        function displayQRCode(qrImage, data) {
+            const displayArea = document.getElementById('qrDisplayArea');
+            displayArea.innerHTML = `<img src="${qrImage}" alt="QR Code">`;
+            
+            const dataDisplay = document.getElementById('qrDataDisplay');
+            dataDisplay.textContent = `Data: ${data}`;
+            dataDisplay.style.display = 'block';
+            
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.style.display = 'block';
+            downloadBtn.onclick = () => downloadQRCode(qrImage, data);
+        }
+
+        function downloadQRCode(qrImage, data) {
+            const link = document.createElement('a');
+            link.href = qrImage;
+            link.download = `qrcode-${Date.now()}.png`;
+            link.click();
+        }
+
+        // Batch QR Code Generator
+        document.getElementById('generateBatchBtn').addEventListener('click', async function() {
+            const batchData = document.getElementById('batchData').value.trim().split('\n').filter(x => x);
+            
+            if (batchData.length === 0) {
+                showBatchStatus('error', 'Please enter at least one item');
+                return;
+            }
+
+            showBatchStatus('loading', `Generating ${batchData.length} QR codes...`);
+
+            const items = batchData.map((data, idx) => ({
+                id: idx + 1,
+                data: data.trim()
+            }));
+
+            try {
+                const response = await fetch(`${API_BASE}/generate-qr-batch`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ items })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    displayBatchResults(result.qr_codes);
+                    showBatchStatus('success', `Successfully generated ${result.qr_codes.length} QR codes`);
+                } else {
+                    showBatchStatus('error', 'Failed to generate QR codes');
+                }
+            } catch (error) {
+                showBatchStatus('error', 'Error: ' + error.message);
+            }
+        });
+
+        function displayBatchResults(qrCodes) {
+            const resultsDiv = document.getElementById('batchResults');
+            resultsDiv.innerHTML = qrCodes.map(qr => `
+                <div class="batch-item">
+                    <img src="${qr.qr_code}" alt="QR Code">
+                    <div class="batch-item-info">
+                        <strong>#${qr.id}</strong>
+                        <p>${qr.data}</p>
+                    </div>
+                    <button onclick="downloadQRCode('${qr.qr_code}', '${qr.data}')" class="download-btn">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            `).join('');
+            resultsDiv.style.display = 'block';
+        }
+
+        function showBatchStatus(type, message) {
+            const statusDiv = document.getElementById('batchStatus');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            statusDiv.style.display = 'block';
+        }
+
+        function showStatus(type, message) {
+            alert(message);
+        }
+    </script>
+</body>
+</html>
