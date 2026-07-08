@@ -1,0 +1,519 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLUTAJR ERP System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ===================== LOGIN ===================== -->
+<div class="login-page" id="loginPage">
+    <div class="login-card">
+        <div class="login-logo">
+            <div class="logo-icon"><i class="fas fa-store"></i></div>
+            <h1>OLUTAJR ERP System</h1>
+            <p>Point of Sale & Business Management</p>
+        </div>
+        <form id="loginForm" onsubmit="return handleLogin(event)">
+            <div class="form-group">
+                <label>Email Address</label>
+                <div class="form-input-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-input" id="loginEmail" value="admin@olutajr.com" placeholder="Enter your email" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <div class="form-input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-input" id="loginPassword" value="admin" placeholder="Enter your password" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Business Location</label>
+                <div class="form-input-icon">
+                    <i class="fas fa-building"></i>
+                    <select class="form-input" style="padding-left:40px;cursor:pointer;" id="loginLocation">
+                        <option>Main Branch</option>
+                        <option>Branch 2</option>
+                        <option>Branch 3</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn-login" id="loginBtn"><i class="fas fa-sign-in-alt" style="margin-right:6px;"></i>Sign In</button>
+            <div class="login-extra">
+                <label class="checkbox-label"><input type="checkbox" checked> Remember me</label>
+                <a href="#">Forgot password?</a>
+            </div>
+        </form>
+        <div style="text-align:center;margin-top:22px;font-size:10px;color:var(--text-muted);letter-spacing:0.3px;">OLUTAJR ERP v1.0.0 &middot; &copy; 2024 All rights reserved</div>
+    </div>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div class="app-layout" id="appLayout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="s-logo">OJ</div>
+            <div class="s-text">
+                <h2>OLUTAJR ERP</h2>
+                <span>Business Management</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Main</div>
+            <a class="nav-item active" data-page="dashboard" onclick="switchPage('dashboard')"><i class="fas fa-th-large"></i>Dashboard</a>
+            <a class="nav-item" data-page="pos" onclick="switchPage('pos')"><i class="fas fa-cash-register"></i>Point of Sale</a>
+
+            <div class="nav-section-title">Sales</div>
+            <a class="nav-item" data-page="sales" onclick="switchPage('sales')"><i class="fas fa-receipt"></i>Sales History</a>
+            <a class="nav-item" data-page="customers" onclick="switchPage('customers')"><i class="fas fa-users"></i>Customers</a>
+
+            <div class="nav-section-title">Inventory</div>
+            <a class="nav-item" data-page="products" onclick="switchPage('products')"><i class="fas fa-boxes-stacked"></i>Products</a>
+            <a class="nav-item" data-page="stock" onclick="switchPage('stock')"><i class="fas fa-warehouse"></i>Stock Management</a>
+
+            <div class="nav-section-title">Finance</div>
+            <a class="nav-item" data-page="finance" onclick="switchPage('finance')"><i class="fas fa-wallet"></i>Finance</a>
+            <a class="nav-item" data-page="reporting" onclick="switchPage('reporting')"><i class="fas fa-chart-bar"></i>Reporting</a>
+            <a class="nav-item" data-page="expenses" onclick="switchPage('expenses')"><i class="fas fa-money-bill-trend-up"></i>Expenses</a>
+
+            <div class="nav-section-title">System</div>
+            <a class="nav-item" data-page="users" onclick="switchPage('users')"><i class="fas fa-user-shield"></i>User Management</a>
+            <a class="nav-item" data-page="settings" onclick="switchPage('settings')"><i class="fas fa-cog"></i>Settings</a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-user">
+                <div class="avatar">SU</div>
+                <div class="u-info">
+                    <span>Super Admin <span class="super-badge">SUPER</span></span>
+                    <small>Full Access</small>
+                </div>
+            </div>
+            <button class="btn btn-logout" onclick="handleLogout()" title="Logout"><i class="fas fa-sign-out-alt"></i>Logout</button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+                <div>
+                    <h2 id="pageTitle">Dashboard</h2>
+                    <div class="breadcrumb"><a href="#">Home</a> / <span id="breadcrumbCurrent">Dashboard</span></div>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="topbar-search"><i class="fas fa-search"></i><input type="text" placeholder="Search... (Ctrl+K)"></div>
+                <button class="topbar-btn" onclick="showToast('No new messages','info')"><i class="fas fa-envelope"></i></button>
+                <button class="topbar-btn" onclick="showToast('No new notifications','info')"><i class="fas fa-bell"></i></button>
+                <button class="topbar-btn" onclick="handleLogout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </header>
+
+        <!-- ===== DASHBOARD ===== -->
+        <section class="page-section active" id="page-dashboard">
+            <div class="page-content">
+                <div class="quick-actions">
+                    <button class="quick-action-btn" onclick="switchPage('pos')"><i class="fas fa-plus-circle" style="color:var(--primary)"></i>New Sale</button>
+                    <button class="quick-action-btn" onclick="openModal('addProductModal')"><i class="fas fa-box" style="color:var(--success)"></i>Add Product</button>
+                    <button class="quick-action-btn" onclick="openModal('addCustomerModal')"><i class="fas fa-user-plus" style="color:var(--accent)"></i>Add Customer</button>
+                    <button class="quick-action-btn" onclick="switchPage('stock')"><i class="fas fa-truck" style="color:var(--warning)"></i>Stock Update</button>
+                </div>
+                <div class="stat-grid" id="dashStats"></div>
+                <div class="grid-2" id="dashChartsRow">
+                    <div class="card">
+                        <div class="card-header"><h3><span class="live-dot" style="margin-right:7px;"></span>Revenue Overview</h3></div>
+                        <div class="card-body"><canvas id="revenueChart" height="260"></canvas></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>Sales by Category</h3></div>
+                        <div class="card-body"><canvas id="categoryChart" height="260"></canvas></div>
+                    </div>
+                </div>
+                <div class="grid-equal">
+                    <div class="card">
+                        <div class="card-header"><h3>Recent Sales</h3><button class="btn btn-sm btn-outline" onclick="switchPage('sales')">View All</button></div>
+                        <div class="card-body" id="dashRecentSales" style="padding:0;"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>Recent Activity</h3></div>
+                        <div class="card-body" id="dashActivity"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== POS ===== -->
+        <section class="page-section" id="page-pos">
+            <div class="page-content" style="padding:18px;">
+                <div class="pos-layout">
+                    <div class="pos-products">
+                        <div class="pos-search">
+                            <div style="position:relative;flex:1;"><i class="fas fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:12px;"></i><input type="text" placeholder="Search products by name, SKU, barcode..." id="posSearchInput" oninput="filterPosProducts()"></div>
+                            <button class="btn btn-primary" onclick="openModal('addProductModal')"><i class="fas fa-plus"></i>Add</button>
+                        </div>
+                        <div class="pos-cats" id="posCats"></div>
+                        <div class="pos-product-grid" id="posProductGrid"></div>
+                    </div>
+                    <div class="pos-cart">
+                        <div class="cart-header"><h3><i class="fas fa-shopping-cart" style="margin-right:5px;"></i>Current Order</h3><button class="btn btn-sm btn-outline" onclick="clearCart()"><i class="fas fa-trash"></i>Clear</button></div>
+                        <div class="cart-items" id="cartItems"></div>
+                        <div class="cart-summary" id="cartSummary" style="display:none;"></div>
+                        <div class="cart-actions" id="cartActions" style="display:none;">
+                            <button class="btn btn-outline" onclick="holdOrder()"><i class="fas fa-pause"></i>Hold</button>
+                            <button class="btn btn-success" onclick="completeSale()"><i class="fas fa-check"></i>Pay Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SALES ===== -->
+        <section class="page-section" id="page-sales">
+            <div class="page-content">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    <div><h3 style="font-weight:700;">Sales History</h3><p style="font-size:12px;color:var(--text-secondary);">Track all sales transactions</p></div>
+                    <div style="display:flex;gap:7px;">
+                        <button class="btn btn-outline" onclick="exportData('sales')"><i class="fas fa-download"></i>Export</button>
+                        <button class="btn btn-primary" onclick="switchPage('pos')"><i class="fas fa-plus"></i>New Sale</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <input type="text" class="form-input" placeholder="Search sales..." style="width:220px;padding:7px 12px;font-size:12px;" id="salesSearchInput" oninput="renderSalesPage()">
+                        <span style="font-size:12px;color:var(--text-secondary);" id="salesCount">0 sales</span>
+                    </div>
+                    <div class="card-body" style="padding:0;" id="salesTableBody"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CUSTOMERS ===== -->
+        <section class="page-section" id="page-customers">
+            <div class="page-content">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    <div><h3 style="font-weight:700;">Customer Management</h3><p style="font-size:12px;color:var(--text-secondary);">Manage your customer database</p></div>
+                    <button class="btn btn-primary" onclick="openModal('addCustomerModal')"><i class="fas fa-user-plus"></i>Add Customer</button>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <input type="text" class="form-input" placeholder="Search customers..." style="width:220px;padding:7px 12px;font-size:12px;" id="custSearchInput" oninput="renderCustomerPage()">
+                        <span style="font-size:12px;color:var(--text-secondary);" id="custCount">0 customers</span>
+                    </div>
+                    <div class="card-body" style="padding:0;" id="customerTableBody"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PRODUCTS ===== -->
+        <section class="page-section" id="page-products">
+            <div class="page-content">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    <div><h3 style="font-weight:700;">Product Management</h3><p style="font-size:12px;color:var(--text-secondary);">Manage your product catalog</p></div>
+                    <div style="display:flex;gap:7px;">
+                        <button class="btn btn-outline" onclick="exportData('products')"><i class="fas fa-download"></i>Export</button>
+                        <button class="btn btn-primary" onclick="openModal('addProductModal')"><i class="fas fa-plus"></i>Add Product</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div style="display:flex;gap:7px;">
+                            <input type="text" class="form-input" placeholder="Search products..." style="width:200px;padding:7px 12px;font-size:12px;" id="prodSearchInput" oninput="renderProductPage()">
+                            <select class="form-input" style="width:130px;padding:7px 12px;font-size:12px;cursor:pointer;" id="prodCatFilter" onchange="renderProductPage()"><option value="">All Categories</option></select>
+                        </div>
+                        <span style="font-size:12px;color:var(--text-secondary);" id="prodCount">0 products</span>
+                    </div>
+                    <div class="card-body" style="padding:0;" id="productTableBody"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== STOCK ===== -->
+        <section class="page-section" id="page-stock">
+            <div class="page-content">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    <div><h3 style="font-weight:700;">Stock Management</h3><p style="font-size:12px;color:var(--text-secondary);">Track inventory and stock levels</p></div>
+                    <button class="btn btn-primary" onclick="openModal('addStockModal')"><i class="fas fa-plus"></i>Add Stock</button>
+                </div>
+                <div class="stat-grid" style="grid-template-columns:repeat(3,1fr);" id="stockStats"></div>
+                <div class="card">
+                    <div class="card-header"><h3>Stock Overview</h3></div>
+                    <div class="card-body" style="padding:0;" id="stockTableBody"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FINANCE ===== -->
+        <section class="page-section" id="page-finance">
+            <div class="page-content">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    <div><h3 style="font-weight:700;">Finance</h3><p style="font-size:12px;color:var(--text-secondary);">Financial position, expense control and cash flow</p></div>
+                    <button class="btn btn-outline" onclick="exportData('finance')"><i class="fas fa-download"></i>Export Finance</button>
+                </div>
+                <div class="stat-grid" id="financeStats"></div>
+                <div class="grid-equal">
+                    <div class="card"><div class="card-header"><h3>Expense Breakdown</h3></div><div class="card-body" id="financeExpenseBreakdown"></div></div>
+                    <div class="card"><div class="card-header"><h3>Cash Flow Summary</h3></div><div class="card-body" id="financeCashFlow"></div></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Expense Records</h3></div>
+                    <div class="card-body" style="padding:0;" id="financeExpenseTable"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== REPORTING ===== -->
+        <section class="page-section" id="page-reporting">
+            <div class="page-content">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    <div><h3 style="font-weight:700;">Reporting</h3><p style="font-size:12px;color:var(--text-secondary);">ERP-wide reports and analytics across sales, inventory and finance</p></div>
+                    <button class="btn btn-outline" onclick="exportData('reports')"><i class="fas fa-download"></i>Export Reports</button>
+                </div>
+                <div class="stat-grid" id="reportStats"></div>
+                <div class="grid-equal">
+                    <div class="card"><div class="card-header"><h3>Revenue Trend</h3></div><div class="card-body"><canvas id="reportRevenueChart" height="280"></canvas></div></div>
+                    <div class="card"><div class="card-header"><h3>Payment Methods</h3></div><div class="card-body"><canvas id="reportPaymentChart" height="280"></canvas></div></div>
+                </div>
+                <div class="grid-equal">
+                    <div class="card"><div class="card-header"><h3>Top Selling Products</h3></div><div class="card-body" id="reportTopProducts"></div></div>
+                    <div class="card"><div class="card-header"><h3>Key Metrics</h3></div><div class="card-body" id="reportKeyMetrics"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== EXPENSES ===== -->
+        <section class="page-section" id="page-expenses">
+            <div class="page-content">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    <div><h3 style="font-weight:700;">Expense Tracking</h3><p style="font-size:12px;color:var(--text-secondary);">Monitor and manage expenses</p></div>
+                    <button class="btn btn-primary" onclick="openModal('addExpenseModal')"><i class="fas fa-plus"></i>Add Expense</button>
+                </div>
+                <div class="stat-grid" style="grid-template-columns:repeat(3,1fr);" id="expenseStats"></div>
+                <div class="card">
+                    <div class="card-header"><h3>Expense Records</h3></div>
+                    <div class="card-body" style="padding:0;" id="expenseTableBody"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== USERS ===== -->
+        <section class="page-section" id="page-users">
+            <div class="page-content">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    <div><h3 style="font-weight:700;">User Management</h3><p style="font-size:12px;color:var(--text-secondary);">Manage system users and assign roles</p></div>
+                    <button class="btn btn-primary" onclick="openModal('addUserModal')"><i class="fas fa-user-plus"></i>Add User</button>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <input type="text" class="form-input" placeholder="Search users..." style="width:220px;padding:7px 12px;font-size:12px;" id="userSearchInput" oninput="renderUserPage()">
+                        <span style="font-size:12px;color:var(--text-secondary);" id="userCount">0 users</span>
+                    </div>
+                    <div class="card-body" style="padding:0;" id="userTableBody"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SETTINGS ===== -->
+        <section class="page-section" id="page-settings">
+            <div class="page-content">
+                <div style="margin-bottom:18px;"><h3 style="font-weight:700;">Settings</h3><p style="font-size:12px;color:var(--text-secondary);">Configure your ERP system</p></div>
+                <div class="grid-equal">
+                    <div class="card"><div class="card-header"><h3>Business Information</h3></div><div class="card-body">
+                        <div class="form-grid">
+                            <div class="form-group"><label>Business Name</label><input type="text" class="form-input" id="setBizName" placeholder="Business name"></div>
+                            <div class="form-group"><label>Phone</label><input type="text" class="form-input" id="setBizPhone" placeholder="+254 7XX XXX XXX"></div>
+                            <div class="form-group"><label>Email</label><input type="email" class="form-input" id="setBizEmail" placeholder="email@example.com"></div>
+                            <div class="form-group"><label>Tax PIN</label><input type="text" class="form-input" id="setBizPIN" placeholder="Tax PIN"></div>
+                            <div class="form-group full-width"><label>Address</label><input type="text" class="form-input" id="setBizAddr" placeholder="Business address"></div>
+                            <div class="form-group"><label>Currency</label><select class="form-input" style="cursor:pointer;" id="setBizCurrency"><option>KES - Kenyan Shilling</option><option>USD - US Dollar</option><option>EUR - Euro</option><option>GBP - British Pound</option></select></div>
+                            <div class="form-group"><label>Timezone</label><select class="form-input" style="cursor:pointer;" id="setBizTZ"><option>Africa/Nairobi (EAT)</option><option>UTC</option><option>Europe/London (GMT)</option></select></div>
+                        </div>
+                        <button class="btn btn-primary" style="margin-top:18px;" onclick="saveSettings()"><i class="fas fa-save"></i>Save Changes</button>
+                    </div></div>
+                    <div class="card"><div class="card-header"><h3>Tax & Receipt</h3></div><div class="card-body">
+                        <div class="form-group"><label>Default Tax Rate (%)</label><input type="number" class="form-input" id="setTaxRate" value="16"></div>
+                        <div class="form-group"><label>Tax Name</label><input type="text" class="form-input" id="setTaxName" value="VAT"></div>
+                        <div class="form-group"><label>Receipt Footer Message</label><textarea class="form-input" rows="3" id="setReceiptMsg" placeholder="Thank you for your purchase!" style="resize:vertical;"></textarea></div>
+                        <div style="padding:12px;background:rgba(14,116,144,0.08);border-radius:9px;display:flex;gap:9px;align-items:flex-start;margin-top:10px;">
+                            <i class="fas fa-shield-alt" style="color:var(--primary);margin-top:2px;"></i>
+                            <div style="font-size:12px;color:var(--text-secondary);">As Super Admin, you have full access to all settings and data. Changes affect the entire system.</div>
+                        </div>
+                        <button class="btn btn-primary" style="margin-top:18px;" onclick="saveSettings()"><i class="fas fa-save"></i>Save Tax Settings</button>
+                    </div></div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- ===================== MODALS ===================== -->
+
+<!-- ADD PRODUCT -->
+<div class="modal-overlay" id="addProductModal">
+    <div class="modal">
+        <div class="modal-header"><h3 id="productModalTitle">Add New Product</h3><button class="modal-close" onclick="closeModal('addProductModal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body">
+            <input type="hidden" id="editProductId" value="">
+            <div class="form-grid">
+                <div class="form-group full-width"><label>Product Name *</label><input type="text" class="form-input" id="pName" placeholder="Product name"></div>
+                <div class="form-group"><label>SKU *</label><input type="text" class="form-input" id="pSku" placeholder="SKU-001"></div>
+                <div class="form-group"><label>Category *</label><input type="text" class="form-input" id="pCategory" placeholder="e.g. Electronics, Accessories" list="catSuggestions"><datalist id="catSuggestions"></datalist></div>
+                <div class="form-group"><label>Selling Price *</label><input type="number" class="form-input" id="pPrice" placeholder="0.00" min="0" step="0.01"></div>
+                <div class="form-group"><label>Cost Price</label><input type="number" class="form-input" id="pCost" placeholder="0.00" min="0" step="0.01"></div>
+                <div class="form-group"><label>Stock Quantity *</label><input type="number" class="form-input" id="pStock" placeholder="0" min="0"></div>
+                <div class="form-group"><label>Min Stock Level</label><input type="number" class="form-input" id="pMinStock" placeholder="10" min="0" value="10"></div>
+                <div class="form-group full-width"><label>Description</label><textarea class="form-input" rows="2" id="pDesc" placeholder="Product description..." style="resize:vertical;"></textarea></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('addProductModal')">Cancel</button>
+            <button class="btn btn-primary" onclick="saveProduct()"><i class="fas fa-save"></i>Save Product</button>
+        </div>
+    </div>
+</div>
+
+<!-- ADD CUSTOMER -->
+<div class="modal-overlay" id="addCustomerModal">
+    <div class="modal">
+        <div class="modal-header"><h3 id="customerModalTitle">Add Customer</h3><button class="modal-close" onclick="closeModal('addCustomerModal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body">
+            <input type="hidden" id="editCustId" value="">
+            <div class="form-grid">
+                <div class="form-group"><label>First Name *</label><input type="text" class="form-input" id="cFirst" placeholder="First name"></div>
+                <div class="form-group"><label>Last Name *</label><input type="text" class="form-input" id="cLast" placeholder="Last name"></div>
+                <div class="form-group"><label>Email</label><input type="email" class="form-input" id="cEmail" placeholder="email@example.com"></div>
+                <div class="form-group"><label>Phone *</label><input type="text" class="form-input" id="cPhone" placeholder="+254 7XX XXX XXX"></div>
+                <div class="form-group full-width"><label>Address</label><input type="text" class="form-input" id="cAddress" placeholder="Customer address"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('addCustomerModal')">Cancel</button>
+            <button class="btn btn-primary" onclick="saveCustomer()"><i class="fas fa-save"></i>Save Customer</button>
+        </div>
+    </div>
+</div>
+
+<!-- ADD USER -->
+<div class="modal-overlay" id="addUserModal">
+    <div class="modal">
+        <div class="modal-header"><h3 id="userModalTitle">Add User</h3><button class="modal-close" onclick="closeModal('addUserModal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body">
+            <input type="hidden" id="editUserId" value="">
+            <div class="form-grid">
+                <div class="form-group"><label>First Name *</label><input type="text" class="form-input" id="uFirst" placeholder="First name"></div>
+                <div class="form-group"><label>Last Name *</label><input type="text" class="form-input" id="uLast" placeholder="Last name"></div>
+                <div class="form-group"><label>Email *</label><input type="email" class="form-input" id="uEmail" placeholder="email@example.com"></div>
+                <div class="form-group"><label>Password *</label><input type="password" class="form-input" id="uPassword" placeholder="Password"></div>
+                <div class="form-group"><label>Role *</label><select class="form-input" id="uRole" style="cursor:pointer;" onchange="applyRolePreset(this.value)"><option>Super Admin</option><option>Admin</option><option>Manager</option><option>Cashier</option><option>Viewer</option></select></div>
+                <div class="form-group"><label>Status</label><select class="form-input" id="uStatus" style="cursor:pointer;"><option>Active</option><option>Inactive</option></select></div>
+                <div class="form-group full-width"><label>Role Notes</label><input type="text" class="form-input" id="uNotes" placeholder="Optional role notes"></div>
+            </div>
+            <div class="form-group full-width" style="margin-top:10px;">
+                <label>Module Access</label>
+                <div class="permission-grid" id="userPermissionGrid"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('addUserModal')">Cancel</button>
+            <button class="btn btn-primary" onclick="saveUser()"><i class="fas fa-save"></i>Save User</button>
+        </div>
+    </div>
+</div>
+
+<!-- ADD STOCK -->
+<div class="modal-overlay" id="addStockModal">
+    <div class="modal">
+        <div class="modal-header"><h3>Add Stock</h3><button class="modal-close" onclick="closeModal('addStockModal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>Product *</label><select class="form-input" style="cursor:pointer;" id="stockProduct"></select></div>
+            <div class="form-grid">
+                <div class="form-group"><label>Quantity *</label><input type="number" class="form-input" id="stockQty" placeholder="0" min="1"></div>
+                <div class="form-group"><label>Cost per Unit</label><input type="number" class="form-input" id="stockCost" placeholder="0.00" min="0" step="0.01"></div>
+            </div>
+            <div class="form-group"><label>Supplier</label><input type="text" class="form-input" id="stockSupplier" placeholder="Supplier name"></div>
+            <div class="form-group"><label>Notes</label><textarea class="form-input" rows="2" id="stockNotes" placeholder="Optional notes..." style="resize:vertical;"></textarea></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('addStockModal')">Cancel</button>
+            <button class="btn btn-primary" onclick="addStock()"><i class="fas fa-save"></i>Add Stock</button>
+        </div>
+    </div>
+</div>
+
+<!-- ADD EXPENSE -->
+<div class="modal-overlay" id="addExpenseModal">
+    <div class="modal">
+        <div class="modal-header"><h3>Add Expense</h3><button class="modal-close" onclick="closeModal('addExpenseModal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>Description *</label><input type="text" class="form-input" id="expDesc" placeholder="Expense description"></div>
+            <div class="form-grid">
+                <div class="form-group"><label>Amount *</label><input type="number" class="form-input" id="expAmount" placeholder="0.00" min="0" step="0.01"></div>
+                <div class="form-group"><label>Category</label><select class="form-input" style="cursor:pointer;" id="expCategory"><option>Rent</option><option>Salaries</option><option>Utilities</option><option>Suppliers</option><option>Maintenance</option><option>Transport</option><option>Other</option></select></div>
+                <div class="form-group"><label>Date</label><input type="date" class="form-input" id="expDate"></div>
+                <div class="form-group"><label>Status</label><select class="form-input" style="cursor:pointer;" id="expStatus"><option>Paid</option><option>Pending</option></select></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('addExpenseModal')">Cancel</button>
+            <button class="btn btn-primary" onclick="saveExpense()"><i class="fas fa-save"></i>Save Expense</button>
+        </div>
+    </div>
+</div>
+
+<!-- CHECKOUT -->
+<div class="modal-overlay" id="checkoutModal">
+    <div class="modal" style="width:460px;">
+        <div class="modal-header"><h3>Complete Payment</h3><button class="modal-close" onclick="closeModal('checkoutModal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body">
+            <div style="text-align:center;margin-bottom:18px;">
+                <div style="font-size:13px;color:var(--text-secondary);">Total Amount</div>
+                <div style="font-size:34px;font-weight:900;color:var(--primary);font-family:'JetBrains Mono',sans-serif;" id="checkoutTotal">0.00</div>
+            </div>
+            <div class="form-group"><label>Payment Method</label>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:5px;">
+                    <button class="btn btn-outline pm-btn active" onclick="selectPM(this,'Cash')" style="padding:12px;flex-direction:column;"><i class="fas fa-money-bill-wave" style="font-size:18px;margin-bottom:3px;"></i><span style="font-size:10px;">Cash</span></button>
+                    <button class="btn btn-outline pm-btn" onclick="selectPM(this,'M-Pesa')" style="padding:12px;flex-direction:column;"><i class="fas fa-mobile-alt" style="font-size:18px;margin-bottom:3px;"></i><span style="font-size:10px;">M-Pesa</span></button>
+                    <button class="btn btn-outline pm-btn" onclick="selectPM(this,'Card')" style="padding:12px;flex-direction:column;"><i class="fas fa-credit-card" style="font-size:18px;margin-bottom:3px;"></i><span style="font-size:10px;">Card</span></button>
+                </div>
+            </div>
+            <div class="form-group" id="mpesaField" style="display:none;"><label>M-Pesa Phone</label><input type="text" class="form-input" placeholder="+254 7XX XXX XXX"></div>
+            <div class="form-group"><label>Amount Tendered</label><input type="number" class="form-input" id="amountTendered" placeholder="0.00" min="0" step="0.01" oninput="calcChange()"></div>
+            <div id="changeDisplay" style="display:none;padding:10px;border-radius:9px;text-align:center;"><div style="font-size:11px;color:var(--text-secondary);">Change</div><div style="font-size:22px;font-weight:800;font-family:'JetBrains Mono',sans-serif;" id="changeAmount">0.00</div></div>
+            <div class="form-group" style="margin-top:10px;"><label>Customer (Optional)</label><select class="form-input" style="cursor:pointer;" id="checkoutCustomer"><option value="">Walk-in Customer</option></select></div>
+            <div class="form-group"><label>Discount (KES)</label><input type="number" class="form-input" id="checkoutDiscount" placeholder="0.00" min="0" value="0" oninput="updateCartTotals()"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('checkoutModal')">Cancel</button>
+            <button class="btn btn-success" onclick="finalizeSale()"><i class="fas fa-check-circle"></i>Complete Sale</button>
+        </div>
+    </div>
+</div>
+
+<!-- RECEIPT -->
+<div class="modal-overlay" id="receiptModal">
+    <div class="modal" style="width:380px;">
+        <div class="modal-header"><h3>Sale Completed</h3><button class="modal-close" onclick="closeModal('receiptModal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body"><div class="receipt-preview" id="receiptContent"></div></div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('receiptModal')">Close</button>
+            <button class="btn btn-primary" onclick="printReceipt()"><i class="fas fa-print"></i>Print Receipt</button>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT PRODUCT MODAL reuses addProductModal -->
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

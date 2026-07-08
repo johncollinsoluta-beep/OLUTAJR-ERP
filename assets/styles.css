@@ -1,0 +1,2769 @@
+﻿
+        :root {
+            --primary: #0e7490;
+            --primary-dark: #155e75;
+            --primary-light: #22d3ee;
+            --accent: #f97316;
+            --accent-dark: #ea580c;
+            --sidebar-bg: #0c1222;
+            --sidebar-hover: #162032;
+            --sidebar-active: #0e7490;
+            --body-bg: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --success: #059669;
+            --danger: #dc2626;
+            --warning: #d97706;
+            --info: #0891b2;
+            --border: #e2e8f0;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Inter',sans-serif;background:var(--body-bg);color:var(--text-primary);}
+        ::-webkit-scrollbar{width:5px;height:5px;}
+        ::-webkit-scrollbar-track{background:transparent;}
+        ::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:4px;}
+        ::-webkit-scrollbar-thumb:hover{background:var(--text-secondary);}
+
+        /* LOGIN */
+        .login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0c122220%,#0e749060%,#155e75100%);position:relative;overflow:hidden;}
+        .login-page::before{content:'';position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(249,115,22,0.12)0%,transparent 70%);top:-250px;right:-150px;border-radius:50%;}
+        .login-page::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(14,116,144,0.18)0%,transparent 70%);bottom:-150px;left:-100px;border-radius:50%;}
+        .login-card{background:rgba(255,255,255,0.97);border-radius:18px;padding:48px 40px;width:430px;max-width:95%;box-shadow:0 30px 70px rgba(0,0,0,0.35);position:relative;z-index:10;}
+        .login-logo{text-align:center;margin-bottom:32px;}
+        .login-logo .logo-icon{width:68px;height:68px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:16px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:26px;margin-bottom:14px;box-shadow:0 10px 30px rgba(14,116,144,0.35);}
+        .login-logo h1{font-size:22px;font-weight:900;letter-spacing:-0.5px;color:var(--text-primary);}
+        .login-logo p{font-size:12px;color:var(--text-secondary);margin-top:4px;letter-spacing:0.5px;}
+        .form-group{margin-bottom:18px;}
+        .form-group label{display:block;font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;}
+        .form-input{width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;transition:all 0.2s;background:#f8fafc;}
+        .form-input:focus{outline:none;border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(14,116,144,0.12);}
+        .form-input-icon{position:relative;}
+        .form-input-icon i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;}
+        .form-input-icon .form-input{padding-left:40px;}
+        .btn-login{width:100%;padding:12px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all 0.3s;box-shadow:0 6px 20px rgba(14,116,144,0.35);letter-spacing:0.3px;}
+        .btn-login:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(14,116,144,0.45);}
+        .btn-login:active{transform:translateY(0);}
+        .login-extra{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-size:12px;}
+        .login-extra a{color:var(--primary);text-decoration:none;font-weight:600;}
+        .login-extra a:hover{text-decoration:underline;}
+        .checkbox-label{display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--text-secondary);}
+        .checkbox-label input[type="checkbox"]{width:15px;height:15px;accent-color:var(--primary);}
+
+        /* LAYOUT */
+        .app-layout{display:none;min-height:100vh;}
+        .app-layout.active{display:flex;}
+
+        /* SIDEBAR */
+        .sidebar{width:256px;background:var(--sidebar-bg);min-height:100vh;position:fixed;left:0;top:0;z-index:100;display:flex;flex-direction:column;transition:transform 0.3s ease;}
+        .sidebar-header{padding:18px 18px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:11px;}
+        .sidebar-header .s-logo{width:40px;height:40px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:900;flex-shrink:0;}
+        .sidebar-header .s-text h2{color:#fff;font-size:15px;font-weight:800;letter-spacing:-0.3px;}
+        .sidebar-header .s-text span{color:var(--text-muted);font-size:10px;letter-spacing:0.5px;text-transform:uppercase;}
+        .sidebar-nav{padding:14px 10px;flex:1;overflow-y:auto;}
+        .nav-section-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.8px;color:rgba(148,163,184,0.6);padding:14px 14px 6px;}
+        .nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;color:#94a3b8;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.15s;margin-bottom:1px;text-decoration:none;}
+        .nav-item:hover{background:var(--sidebar-hover);color:#e2e8f0;}
+        .nav-item.active{background:var(--sidebar-active);color:#fff;box-shadow:0 4px 14px rgba(14,116,144,0.35);}
+        .nav-item i{width:20px;text-align:center;font-size:14px;}
+        .nav-badge{margin-left:auto;background:var(--accent);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;}
+        .nav-badge.success{background:var(--success);}
+        .nav-badge.danger{background:var(--danger);}
+        .sidebar-footer{padding:14px 18px;border-top:1px solid rgba(255,255,255,0.06);}
+        .sidebar-user{display:flex;align-items:center;gap:10px;}
+        .sidebar-user .avatar{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800;}
+        .sidebar-user .u-info span{color:#fff;font-size:13px;font-weight:600;display:block;}
+        .sidebar-user .u-info small{color:var(--text-muted);font-size:10px;}
+        .super-badge{background:linear-gradient(135deg,var(--accent),#ef4444);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:0.5px;}
+
+        /* MAIN */
+        .main-content{margin-left:256px;flex:1;min-height:100vh;}
+
+        /* TOPBAR */
+        .topbar{background:var(--card-bg);padding:0 26px;height:62px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;}
+        .topbar-left{display:flex;align-items:center;gap:14px;}
+        .topbar-left .menu-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text-secondary);cursor:pointer;}
+        .topbar-left h2{font-size:17px;font-weight:800;}
+        .breadcrumb{font-size:11px;color:var(--text-muted);}
+        .breadcrumb a{color:var(--primary);text-decoration:none;}
+        .topbar-right{display:flex;align-items:center;gap:6px;}
+        .topbar-btn{width:36px;height:36px;border-radius:9px;border:1px solid var(--border);background:var(--card-bg);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);font-size:14px;transition:all 0.15s;position:relative;}
+        .topbar-btn:hover{background:var(--body-bg);color:var(--text-primary);}
+        .topbar-btn .notif-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;background:var(--danger);border-radius:50%;border:2px solid var(--card-bg);}
+        .topbar-search{position:relative;}
+        .topbar-search input{width:220px;padding:8px 12px 8px 34px;border:1px solid var(--border);border-radius:9px;font-size:12px;font-family:'Inter',sans-serif;background:var(--body-bg);transition:all 0.2s;}
+        .topbar-search input:focus{outline:none;border-color:var(--primary);background:#fff;width:280px;}
+        .topbar-search i{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:12px;}
+
+        /* PAGES */
+        .page-content{padding:24px;}
+        .page-section{display:none;}
+        .page-section.active{display:block;}
+
+        /* STAT CARDS */
+        .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:24px;}
+        .stat-card{background:var(--card-bg);border-radius:14px;padding:20px;border:1px solid var(--border);transition:all 0.2s;position:relative;overflow:hidden;}
+        .stat-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.06);}
+        .stat-card .sc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
+        .stat-card .sc-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+        .stat-card .sc-value{font-size:26px;font-weight:800;margin-bottom:3px;font-family:'JetBrains Mono','Inter',sans-serif;}
+        .stat-card .sc-label{font-size:12px;color:var(--text-secondary);}
+
+        /* CARD */
+        .card{background:var(--card-bg);border-radius:14px;border:1px solid var(--border);overflow:hidden;}
+        .card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+        .card-header h3{font-size:14px;font-weight:700;}
+        .card-body{padding:20px;}
+
+        /* GRIDS */
+        .grid-2{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:24px;}
+        .grid-equal{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px;}
+
+        /* TABLES */
+        .data-table{width:100%;border-collapse:collapse;}
+        .data-table thead th{text-align:left;padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:var(--text-muted);border-bottom:1px solid var(--border);background:#f8fafc;}
+        .data-table tbody td{padding:11px 14px;font-size:13px;border-bottom:1px solid var(--border);}
+        .data-table tbody tr:hover{background:#f8fafc;}
+        .data-table tbody tr:last-child td{border-bottom:none;}
+
+        /* BADGES */
+        .badge{display:inline-block;padding:3px 9px;border-radius:6px;font-size:10px;font-weight:700;letter-spacing:0.3px;}
+        .badge-success{background:rgba(5,150,105,0.1);color:var(--success);}
+        .badge-danger{background:rgba(220,38,38,0.1);color:var(--danger);}
+        .badge-warning{background:rgba(217,119,6,0.1);color:var(--warning);}
+        .badge-info{background:rgba(8,145,178,0.1);color:var(--info);}
+        .badge-primary{background:rgba(14,116,144,0.1);color:var(--primary);}
+        .badge-muted{background:rgba(148,163,184,0.1);color:var(--text-muted);}
+
+        /* BUTTONS */
+        .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:all 0.15s;border:none;}
+        .btn-primary{background:var(--primary);color:#fff;}
+        .btn-primary:hover{background:var(--primary-dark);}
+        .btn-success{background:var(--success);color:#fff;}
+        .btn-success:hover{opacity:0.9;}
+        .btn-warning{background:var(--warning);color:#fff;}
+        .btn-danger{background:var(--danger);color:#fff;}
+        .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text-secondary);}
+        .btn-outline:hover{background:var(--body-bg);color:var(--text-primary);}
+        .btn-sm{padding:5px 10px;font-size:11px;}
+        .btn-icon{width:30px;height:30px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--text-secondary);font-size:12px;transition:all 0.15s;}
+        .btn-logout{width:100%;padding:9px 14px;background:rgba(220,38,38,0.08);color:var(--danger);border:1px solid rgba(220,38,38,0.3);border-radius:8px;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:all 0.15s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:6px;}
+        .btn-logout:hover{background:rgba(220,38,38,0.15);border-color:var(--danger);}
+        .btn-logout:active{opacity:0.8;}
+        .btn-icon:hover{background:var(--body-bg);color:var(--text-primary);}
+        .btn-icon.danger:hover{background:rgba(220,38,38,0.1);color:var(--danger);border-color:rgba(220,38,38,0.2);}
+
+        /* POS */
+        .pos-layout{display:grid;grid-template-columns:1fr 400px;gap:20px;height:calc(100vh - 112px);}
+        .pos-products{background:var(--card-bg);border-radius:16px;border:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.04);}
+        .pos-search{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;gap:12px;background:linear-gradient(135deg,#f8fafc 0%,#f0f4f8 100%);}
+        .pos-search input{flex:1;padding:10px 14px 10px 38px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-family:'Inter',sans-serif;background:#fff;transition:all 0.2s;}
+        .pos-search input:focus{outline:none;border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(14,116,144,0.1);}
+        .pos-cats{display:flex;gap:8px;padding:14px 18px;border-bottom:1px solid var(--border);overflow-x:auto;background:#fafbfc;}
+        .pos-cat-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:#fff;cursor:pointer;white-space:nowrap;transition:all 0.2s;color:var(--text-secondary);}
+        .pos-cat-btn:hover{border-color:var(--primary);color:var(--primary);background:rgba(14,116,144,0.04);}
+        .pos-cat-btn.active{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border-color:var(--primary);box-shadow:0 4px 12px rgba(14,116,144,0.25);}
+        .pos-product-grid{flex:1;padding:16px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px;overflow-y:auto;align-content:start;}
+        .pos-product-card{border:1.5px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;transition:all 0.2s;text-align:center;background:#fff;position:relative;overflow:hidden;}
+        .pos-product-card::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(14,116,144,0) 0%,rgba(14,116,144,0.04) 100%);opacity:0;transition:opacity 0.2s;pointer-events:none;}
+        .pos-product-card:hover{border-color:var(--primary);box-shadow:0 8px 24px rgba(14,116,144,0.15);transform:translateY(-3px);}
+        .pos-product-card:hover::before{opacity:1;}
+        .pos-product-card.out-of-stock{opacity:0.5;pointer-events:none;}
+        .pos-product-card.out-of-stock::after{content:'OUT OF STOCK';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--danger);color:#fff;padding:4px 8px;border-radius:6px;font-size:9px;font-weight:700;letter-spacing:0.5px;}
+        .pp-img{width:100%;height:84px;background:linear-gradient(135deg,#f0f4f8 0%,#e2e8f0 100%);border-radius:9px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+        .pp-img img{width:100%;height:100%;object-fit:cover;}
+        .pp-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.3) 0%,rgba(255,255,255,0) 100%);pointer-events:none;}
+        .pp-name{font-size:12px;font-weight:700;margin-bottom:5px;line-height:1.3;min-height:30px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--text-primary);}
+        .pp-price{font-size:14px;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--primary-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;}
+        .pp-stock{font-size:10px;color:var(--success);font-weight:600;letter-spacing:0.3px;}
+        .pp-stock.low{color:var(--warning);}
+        .pp-stock.out{color:var(--danger);}
+
+        .pos-cart{background:var(--card-bg);border-radius:16px;border:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.04);background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%);}
+        .cart-header{padding:16px 18px;border-bottom:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,#f0f4f8 0%,#f8fafc 100%);}
+        .cart-header h3{font-size:15px;font-weight:800;color:var(--text-primary);}
+        .cart-items{flex:1;overflow-y:auto;padding:12px;background:#fff;}
+        .cart-item{display:flex;align-items:center;gap:10px;padding:11px;border-radius:10px;background:var(--body-bg);margin-bottom:8px;transition:all 0.2s;}
+        .cart-item:hover{background:#e8f2f7;border-left:3px solid var(--primary);padding-left:8px;}
+        .cart-item .ci-info{flex:1;min-width:0;}
+        .cart-item .ci-name{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text-primary);}
+        .cart-item .ci-price{font-size:11px;color:var(--text-secondary);margin-top:2px;}
+        .cart-item .ci-qty{display:flex;align-items:center;gap:4px;}
+        .cart-item .ci-qty button{width:24px;height:24px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all 0.15s;color:var(--primary);}
+        .cart-item .ci-qty button:hover{background:var(--primary);color:#fff;border-color:var(--primary);}
+        .cart-item .ci-qty span{font-size:12px;font-weight:800;min-width:26px;text-align:center;font-family:'JetBrains Mono',sans-serif;color:var(--primary);}
+        .cart-item .ci-total{font-size:12px;font-weight:800;min-width:70px;text-align:right;font-family:'JetBrains Mono',sans-serif;color:var(--primary);}
+        .cart-item .ci-remove{color:var(--text-muted);cursor:pointer;font-size:13px;transition:all 0.15s;padding:5px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;}
+        .cart-item .ci-remove:hover{background:rgba(220,38,38,0.1);color:var(--danger);}
+        .cart-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text-muted);padding:40px 20px;}
+        .cart-empty i{font-size:52px;margin-bottom:12px;opacity:0.2;}
+        .cart-empty p{font-size:13px;font-weight:500;}
+        .cart-summary{padding:16px;border-top:1.5px solid var(--border);background:linear-gradient(135deg,#f8fafc 0%,#f0f4f8 100%);}
+        .cart-summary .cs-row{display:flex;justify-content:space-between;padding:6px 0;font-size:12px;color:var(--text-secondary);font-weight:500;}
+        .cart-summary .cs-row.highlight{color:var(--text-primary);font-weight:600;}
+        .cart-summary .cs-total{display:flex;justify-content:space-between;padding:12px 0 0;margin-top:8px;border-top:2px solid var(--border);font-size:18px;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--primary-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'JetBrains Mono','Inter',sans-serif;}
+        .cart-actions{padding:14px;display:flex;gap:8px;}
+        .cart-actions .btn{flex:1;justify-content:center;padding:12px;font-size:13px;font-weight:700;border-radius:10px;transition:all 0.2s;}
+        .cart-actions .btn-success{box-shadow:0 4px 12px rgba(5,150,105,0.25);}
+        .cart-actions .btn-success:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(5,150,105,0.35);}
+
+        /* MODAL */
+        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(3px);}
+        .modal-overlay.active{display:flex;}
+        .modal{background:var(--card-bg);border-radius:16px;width:520px;max-width:95%;max-height:90vh;overflow-y:auto;box-shadow:0 25px 60px rgba(0,0,0,0.25);animation:modalIn 0.2s ease;}
+        @keyframes modalIn{from{transform:scale(0.96);opacity:0;}to{transform:scale(1);opacity:1;}}
+        .modal-header{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+        .modal-header h3{font-size:15px;font-weight:700;}
+        .modal-close{width:30px;height:30px;border-radius:7px;border:none;background:var(--body-bg);cursor:pointer;font-size:13px;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+        .modal-close:hover{background:var(--danger);color:#fff;}
+        .modal-body{padding:22px;}
+        .modal-footer{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:7px;}
+
+        /* TOAST */
+        .toast-container{position:fixed;top:18px;right:18px;z-index:9999;display:flex;flex-direction:column;gap:7px;}
+        .toast{padding:12px 18px;border-radius:10px;font-size:13px;font-weight:500;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.18);animation:toastIn 0.3s ease,toastOut 0.3s ease 2.7s forwards;display:flex;align-items:center;gap:9px;min-width:260px;}
+        .toast-success{background:var(--success);}
+        .toast-danger{background:var(--danger);}
+        .toast-warning{background:var(--warning);}
+        .toast-info{background:var(--info);}
+        @keyframes toastIn{from{transform:translateX(100%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+        @keyframes toastOut{from{transform:translateX(0);opacity:1;}to{transform:translateX(100%);opacity:0;}}
+
+        /* QUICK ACTIONS */
+        .quick-actions{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
+        .quick-action-btn{display:flex;align-items:center;gap:7px;padding:9px 16px;background:var(--card-bg);border:1px solid var(--border);border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;color:var(--text-primary);transition:all 0.15s;}
+        .quick-action-btn:hover{border-color:var(--primary);color:var(--primary);box-shadow:0 2px 8px rgba(14,116,144,0.1);}
+
+        /* ACTIVITY */
+        .activity-item{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--border);}
+        .activity-item:last-child{border-bottom:none;}
+        .activity-item .ai-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+        .activity-item .ai-text{font-size:12px;line-height:1.5;}
+        .activity-item .ai-time{font-size:10px;color:var(--text-muted);margin-top:2px;}
+
+        /* FORM GRID */
+        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+        .form-grid .full-width{grid-column:1/-1;}
+        .permission-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+        .permission-checkbox{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-secondary);}
+        .permission-checkbox input{width:16px;height:16px;accent-color:var(--primary);}
+
+        /* TAB NAV */
+        .tab-nav{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:18px;}
+        .tab-btn{padding:9px 18px;font-size:12px;font-weight:600;color:var(--text-secondary);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.15s;font-family:'Inter',sans-serif;}
+        .tab-btn:hover{color:var(--text-primary);}
+        .tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);}
+
+        /* RECEIPT */
+        .receipt-preview{background:#fff;border:2px dashed var(--border);border-radius:8px;padding:22px;max-width:310px;margin:0 auto;font-family:'JetBrains Mono',monospace;font-size:11px;}
+        .receipt-preview .r-center{text-align:center;}
+        .receipt-preview .r-bold{font-weight:700;}
+        .receipt-preview .r-line{border-top:1px dashed #000;margin:7px 0;}
+        .receipt-preview .r-row{display:flex;justify-content:space-between;padding:2px 0;}
+        .receipt-preview h4{font-size:15px;font-weight:800;}
+
+        /* PULSE */
+        @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+        .live-dot{width:7px;height:7px;background:var(--success);border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;}
+
+        /* EMPTY STATE */
+        .empty-state{text-align:center;padding:48px 20px;color:var(--text-muted);}
+        .empty-state i{font-size:48px;opacity:0.2;margin-bottom:14px;}
+        .empty-state h4{font-size:16px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;}
+        .empty-state p{font-size:13px;margin-bottom:18px;}
+
+        /* RESPONSIVE */
+        @media(max-width:1200px){.stat-grid{grid-template-columns:repeat(2,1fr);}.grid-2,.grid-equal{grid-template-columns:1fr;}.pos-layout{grid-template-columns:1fr;height:auto;}}
+        @media(max-width:768px){.sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}.main-content{margin-left:0;}.topbar-left .menu-toggle{display:block;}.stat-grid{grid-template-columns:1fr;}.topbar-search{display:none;}.pos-product-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));}}
+    
+/style>
+
+/head>
+
+body>
+
+
+div class="toast-container" id="toastContainer">
+/div>
+
+
+!-- ===================== LOGIN ===================== -->
+
+div class="login-page" id="loginPage">
+    
+div class="login-card">
+        
+div class="login-logo">
+            
+div class="logo-icon">
+i class="fas fa-store">
+/i>
+/div>
+            
+h1>OLUTAJR ERP System
+/h1>
+            
+p>Point of Sale & Business Management
+/p>
+        
+/div>
+        
+form id="loginForm" onsubmit="return handleLogin(event)">
+            
+div class="form-group">
+                
+label>Email Address
+/label>
+                
+div class="form-input-icon">
+                    
+i class="fas fa-envelope">
+/i>
+                    
+input type="email" class="form-input" id="loginEmail" value="admin@olutajr.com" placeholder="Enter your email" required>
+                
+/div>
+            
+/div>
+            
+div class="form-group">
+                
+label>Password
+/label>
+                
+div class="form-input-icon">
+                    
+i class="fas fa-lock">
+/i>
+                    
+input type="password" class="form-input" id="loginPassword" value="admin" placeholder="Enter your password" required>
+                
+/div>
+            
+/div>
+            
+div class="form-group">
+                
+label>Business Location
+/label>
+                
+div class="form-input-icon">
+                    
+i class="fas fa-building">
+/i>
+                    
+select class="form-input" style="padding-left:40px;cursor:pointer;" id="loginLocation">
+                        
+option>Main Branch
+/option>
+                        
+option>Branch 2
+/option>
+                        
+option>Branch 3
+/option>
+                    
+/select>
+                
+/div>
+            
+/div>
+            
+button type="submit" class="btn-login" id="loginBtn">
+i class="fas fa-sign-in-alt" style="margin-right:6px;">
+/i>Sign In
+/button>
+            
+div class="login-extra">
+                
+label class="checkbox-label">
+input type="checkbox" checked> Remember me
+/label>
+                
+a href="#">Forgot password?
+/a>
+            
+/div>
+        
+/form>
+        
+div style="text-align:center;margin-top:22px;font-size:10px;color:var(--text-muted);letter-spacing:0.3px;">OLUTAJR ERP v1.0.0 &middot; &copy; 2024 All rights reserved
+/div>
+    
+/div>
+
+/div>
+
+
+!-- ===================== APP ===================== -->
+
+div class="app-layout" id="appLayout">
+    
+!-- SIDEBAR -->
+    
+aside class="sidebar" id="sidebar">
+        
+div class="sidebar-header">
+            
+div class="s-logo">OJ
+/div>
+            
+div class="s-text">
+                
+h2>OLUTAJR ERP
+/h2>
+                
+span>Business Management
+/span>
+            
+/div>
+        
+/div>
+        
+nav class="sidebar-nav">
+            
+div class="nav-section-title">Main
+/div>
+            
+a class="nav-item active" data-page="dashboard" onclick="switchPage('dashboard')">
+i class="fas fa-th-large">
+/i>Dashboard
+/a>
+            
+a class="nav-item" data-page="pos" onclick="switchPage('pos')">
+i class="fas fa-cash-register">
+/i>Point of Sale
+/a>
+
+            
+div class="nav-section-title">Sales
+/div>
+            
+a class="nav-item" data-page="sales" onclick="switchPage('sales')">
+i class="fas fa-receipt">
+/i>Sales History
+/a>
+            
+a class="nav-item" data-page="customers" onclick="switchPage('customers')">
+i class="fas fa-users">
+/i>Customers
+/a>
+
+            
+div class="nav-section-title">Inventory
+/div>
+            
+a class="nav-item" data-page="products" onclick="switchPage('products')">
+i class="fas fa-boxes-stacked">
+/i>Products
+/a>
+            
+a class="nav-item" data-page="stock" onclick="switchPage('stock')">
+i class="fas fa-warehouse">
+/i>Stock Management
+/a>
+
+            
+div class="nav-section-title">Finance
+/div>
+            
+a class="nav-item" data-page="finance" onclick="switchPage('finance')">
+i class="fas fa-wallet">
+/i>Finance
+/a>
+            
+a class="nav-item" data-page="reporting" onclick="switchPage('reporting')">
+i class="fas fa-chart-bar">
+/i>Reporting
+/a>
+            
+a class="nav-item" data-page="expenses" onclick="switchPage('expenses')">
+i class="fas fa-money-bill-trend-up">
+/i>Expenses
+/a>
+
+            
+div class="nav-section-title">System
+/div>
+            
+a class="nav-item" data-page="users" onclick="switchPage('users')">
+i class="fas fa-user-shield">
+/i>User Management
+/a>
+            
+a class="nav-item" data-page="settings" onclick="switchPage('settings')">
+i class="fas fa-cog">
+/i>Settings
+/a>
+        
+/nav>
+        
+div class="sidebar-footer">
+            
+div class="sidebar-user">
+                
+div class="avatar">SU
+/div>
+                
+div class="u-info">
+                    
+span>Super Admin 
+span class="super-badge">SUPER
+/span>
+/span>
+                    
+small>Full Access
+/small>
+                
+/div>
+            
+/div>
+        
+/div>
+    
+/aside>
+
+    
+!-- MAIN CONTENT -->
+    
+main class="main-content">
+        
+header class="topbar">
+            
+div class="topbar-left">
+                
+button class="menu-toggle" onclick="toggleSidebar()">
+i class="fas fa-bars">
+/i>
+/button>
+                
+div>
+                    
+h2 id="pageTitle">Dashboard
+/h2>
+                    
+div class="breadcrumb">
+a href="#">Home
+/a> / 
+span id="breadcrumbCurrent">Dashboard
+/span>
+/div>
+                
+/div>
+            
+/div>
+            
+div class="topbar-right">
+                
+div class="topbar-search">
+i class="fas fa-search">
+/i>
+input type="text" placeholder="Search... (Ctrl+K)">
+/div>
+                
+button class="topbar-btn" onclick="showToast('No new messages','info')">
+i class="fas fa-envelope">
+/i>
+/button>
+                
+button class="topbar-btn" onclick="showToast('No new notifications','info')">
+i class="fas fa-bell">
+/i>
+/button>
+                
+button class="topbar-btn" onclick="handleLogout()" title="Logout">
+i class="fas fa-sign-out-alt">
+/i>
+/button>
+            
+/div>
+        
+/header>
+
+        
+!-- ===== DASHBOARD ===== -->
+        
+section class="page-section active" id="page-dashboard">
+            
+div class="page-content">
+                
+div class="quick-actions">
+                    
+button class="quick-action-btn" onclick="switchPage('pos')">
+i class="fas fa-plus-circle" style="color:var(--primary)">
+/i>New Sale
+/button>
+                    
+button class="quick-action-btn" onclick="openModal('addProductModal')">
+i class="fas fa-box" style="color:var(--success)">
+/i>Add Product
+/button>
+                    
+button class="quick-action-btn" onclick="openModal('addCustomerModal')">
+i class="fas fa-user-plus" style="color:var(--accent)">
+/i>Add Customer
+/button>
+                    
+button class="quick-action-btn" onclick="switchPage('stock')">
+i class="fas fa-truck" style="color:var(--warning)">
+/i>Stock Update
+/button>
+                
+/div>
+                
+div class="stat-grid" id="dashStats">
+/div>
+                
+div class="grid-2" id="dashChartsRow">
+                    
+div class="card">
+                        
+div class="card-header">
+h3>
+span class="live-dot" style="margin-right:7px;">
+/span>Revenue Overview
+/h3>
+/div>
+                        
+div class="card-body">
+canvas id="revenueChart" height="260">
+/canvas>
+/div>
+                    
+/div>
+                    
+div class="card">
+                        
+div class="card-header">
+h3>Sales by Category
+/h3>
+/div>
+                        
+div class="card-body">
+canvas id="categoryChart" height="260">
+/canvas>
+/div>
+                    
+/div>
+                
+/div>
+                
+div class="grid-equal">
+                    
+div class="card">
+                        
+div class="card-header">
+h3>Recent Sales
+/h3>
+button class="btn btn-sm btn-outline" onclick="switchPage('sales')">View All
+/button>
+/div>
+                        
+div class="card-body" id="dashRecentSales" style="padding:0;">
+/div>
+                    
+/div>
+                    
+div class="card">
+                        
+div class="card-header">
+h3>Recent Activity
+/h3>
+/div>
+                        
+div class="card-body" id="dashActivity">
+/div>
+                    
+/div>
+                
+/div>
+            
+/div>
+        
+/section>
+
+        
+!-- ===== POS ===== -->
+        
+section class="page-section" id="page-pos">
+            
+div class="page-content" style="padding:18px;">
+                
+div class="pos-layout">
+                    
+div class="pos-products">
+                        
+div class="pos-search">
+                            
+div style="position:relative;flex:1;">
+i class="fas fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:12px;">
+/i>
+input type="text" placeholder="Search products by name, SKU, barcode..." id="posSearchInput" oninput="filterPosProducts()">
+/div>
+                            
+button class="btn btn-primary" onclick="openModal('addProductModal')">
+i class="fas fa-plus">
+/i>Add
+/button>
+                        
+/div>
+                        
+div class="pos-cats" id="posCats">
+/div>
+                        
+div class="pos-product-grid" id="posProductGrid">
+/div>
+                    
+/div>
+                    
+div class="pos-cart">
+                        
+div class="cart-header">
+h3>
+i class="fas fa-shopping-cart" style="margin-right:5px;">
+/i>Current Order
+/h3>
+button class="btn btn-sm btn-outline" onclick="clearCart()">
+i class="fas fa-trash">
+/i>Clear
+/button>
+/div>
+                        
+div class="cart-items" id="cartItems">
+/div>
+                        
+div class="cart-summary" id="cartSummary" style="display:none;">
+/div>
+                        
+div class="cart-actions" id="cartActions" style="display:none;">
+                            
+button class="btn btn-outline" onclick="holdOrder()">
+i class="fas fa-pause">
+/i>Hold
+/button>
+                            
+button class="btn btn-success" onclick="completeSale()">
+i class="fas fa-check">
+/i>Pay Now
+/button>
+                        
+/div>
+                    
+/div>
+                
+/div>
+            
+/div>
+        
+/section>
+
+        
+!-- ===== SALES ===== -->
+        
+section class="page-section" id="page-sales">
+            
+div class="page-content">
+                
+div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    
+div>
+h3 style="font-weight:700;">Sales History
+/h3>
+p style="font-size:12px;color:var(--text-secondary);">Track all sales transactions
+/p>
+/div>
+                    
+div style="display:flex;gap:7px;">
+                        
+button class="btn btn-outline" onclick="exportData('sales')">
+i class="fas fa-download">
+/i>Export
+/button>
+                        
+button class="btn btn-primary" onclick="switchPage('pos')">
+i class="fas fa-plus">
+/i>New Sale
+/button>
+                    
+/div>
+                
+/div>
+                
+div class="card">
+                    
+div class="card-header">
+                        
+input type="text" class="form-input" placeholder="Search sales..." style="width:220px;padding:7px 12px;font-size:12px;" id="salesSearchInput" oninput="renderSalesPage()">
+                        
+span style="font-size:12px;color:var(--text-secondary);" id="salesCount">0 sales
+/span>
+                    
+/div>
+                    
+div class="card-body" style="padding:0;" id="salesTableBody">
+/div>
+                
+/div>
+            
+/div>
+        
+/section>
+
+        
+!-- ===== CUSTOMERS ===== -->
+        
+section class="page-section" id="page-customers">
+            
+div class="page-content">
+                
+div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    
+div>
+h3 style="font-weight:700;">Customer Management
+/h3>
+p style="font-size:12px;color:var(--text-secondary);">Manage your customer database
+/p>
+/div>
+                    
+button class="btn btn-primary" onclick="openModal('addCustomerModal')">
+i class="fas fa-user-plus">
+/i>Add Customer
+/button>
+                
+/div>
+                
+div class="card">
+                    
+div class="card-header">
+                        
+input type="text" class="form-input" placeholder="Search customers..." style="width:220px;padding:7px 12px;font-size:12px;" id="custSearchInput" oninput="renderCustomerPage()">
+                        
+span style="font-size:12px;color:var(--text-secondary);" id="custCount">0 customers
+/span>
+                    
+/div>
+                    
+div class="card-body" style="padding:0;" id="customerTableBody">
+/div>
+                
+/div>
+            
+/div>
+        
+/section>
+
+        
+!-- ===== PRODUCTS ===== -->
+        
+section class="page-section" id="page-products">
+            
+div class="page-content">
+                
+div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    
+div>
+h3 style="font-weight:700;">Product Management
+/h3>
+p style="font-size:12px;color:var(--text-secondary);">Manage your product catalog
+/p>
+/div>
+                    
+div style="display:flex;gap:7px;">
+                        
+button class="btn btn-outline" onclick="exportData('products')">
+i class="fas fa-download">
+/i>Export
+/button>
+                        
+button class="btn btn-primary" onclick="openModal('addProductModal')">
+i class="fas fa-plus">
+/i>Add Product
+/button>
+                    
+/div>
+                
+/div>
+                
+div class="card">
+                    
+div class="card-header">
+                        
+div style="display:flex;gap:7px;">
+                            
+input type="text" class="form-input" placeholder="Search products..." style="width:200px;padding:7px 12px;font-size:12px;" id="prodSearchInput" oninput="renderProductPage()">
+                            
+select class="form-input" style="width:130px;padding:7px 12px;font-size:12px;cursor:pointer;" id="prodCatFilter" onchange="renderProductPage()">
+option value="">All Categories
+/option>
+/select>
+                        
+/div>
+                        
+span style="font-size:12px;color:var(--text-secondary);" id="prodCount">0 products
+/span>
+                    
+/div>
+                    
+div class="card-body" style="padding:0;" id="productTableBody">
+/div>
+                
+/div>
+            
+/div>
+        
+/section>
+
+        
+!-- ===== STOCK ===== -->
+        
+section class="page-section" id="page-stock">
+            
+div class="page-content">
+                
+div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    
+div>
+h3 style="font-weight:700;">Stock Management
+/h3>
+p style="font-size:12px;color:var(--text-secondary);">Track inventory and stock levels
+/p>
+/div>
+                    
+button class="btn btn-primary" onclick="openModal('addStockModal')">
+i class="fas fa-plus">
+/i>Add Stock
+/button>
+                
+/div>
+                
+div class="stat-grid" style="grid-template-columns:repeat(3,1fr);" id="stockStats">
+/div>
+                
+div class="card">
+                    
+div class="card-header">
+h3>Stock Overview
+/h3>
+/div>
+                    
+div class="card-body" style="padding:0;" id="stockTableBody">
+/div>
+                
+/div>
+            
+/div>
+        
+/section>
+
+        
+!-- ===== FINANCE ===== -->
+        
+section class="page-section" id="page-finance">
+            
+div class="page-content">
+                
+div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    
+div>
+h3 style="font-weight:700;">Finance
+/h3>
+p style="font-size:12px;color:var(--text-secondary);">Financial position, expense control and cash flow
+/p>
+/div>
+                    
+button class="btn btn-outline" onclick="exportData('finance')">
+i class="fas fa-download">
+/i>Export Finance
+/button>
+                
+/div>
+                
+div class="stat-grid" id="financeStats">
+/div>
+                
+div class="grid-equal">
+                    
+div class="card">
+div class="card-header">
+h3>Expense Breakdown
+/h3>
+/div>
+div class="card-body" id="financeExpenseBreakdown">
+/div>
+/div>
+                    
+div class="card">
+div class="card-header">
+h3>Cash Flow Summary
+/h3>
+/div>
+div class="card-body" id="financeCashFlow">
+/div>
+/div>
+                
+/div>
+                
+div class="card">
+                    
+div class="card-header">
+h3>Expense Records
+/h3>
+/div>
+                    
+div class="card-body" style="padding:0;" id="financeExpenseTable">
+/div>
+                
+/div>
+            
+/div>
+        
+/section>
+
+        
+!-- ===== REPORTING ===== -->
+        
+section class="page-section" id="page-reporting">
+            
+div class="page-content">
+                
+div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    
+div>
+h3 style="font-weight:700;">Reporting
+/h3>
+p style="font-size:12px;color:var(--text-secondary);">ERP-wide reports and analytics across sales, inventory and finance
+/p>
+/div>
+                    
+button class="btn btn-outline" onclick="exportData('reports')">
+i class="fas fa-download">
+/i>Export Reports
+/button>
+                
+/div>
+                
+div class="stat-grid" id="reportStats">
+/div>
+                
+div class="grid-equal">
+                    
+div class="card">
+div class="card-header">
+h3>Revenue Trend
+/h3>
+/div>
+div class="card-body">
+canvas id="reportRevenueChart" height="280">
+/canvas>
+/div>
+/div>
+                    
+div class="card">
+div class="card-header">
+h3>Payment Methods
+/h3>
+/div>
+div class="card-body">
+canvas id="reportPaymentChart" height="280">
+/canvas>
+/div>
+/div>
+                
+/div>
+                
+div class="grid-equal">
+                    
+div class="card">
+div class="card-header">
+h3>Top Selling Products
+/h3>
+/div>
+div class="card-body" id="reportTopProducts">
+/div>
+/div>
+                    
+div class="card">
+div class="card-header">
+h3>Key Metrics
+/h3>
+/div>
+div class="card-body" id="reportKeyMetrics">
+/div>
+/div>
+                
+/div>
+            
+/div>
+        
+/section>
+
+        
+!-- ===== EXPENSES ===== -->
+        
+section class="page-section" id="page-expenses">
+            
+div class="page-content">
+                
+div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    
+div>
+h3 style="font-weight:700;">Expense Tracking
+/h3>
+p style="font-size:12px;color:var(--text-secondary);">Monitor and manage expenses
+/p>
+/div>
+                    
+button class="btn btn-primary" onclick="openModal('addExpenseModal')">
+i class="fas fa-plus">
+/i>Add Expense
+/button>
+                
+/div>
+                
+div class="stat-grid" style="grid-template-columns:repeat(3,1fr);" id="expenseStats">
+/div>
+                
+div class="card">
+                    
+div class="card-header">
+h3>Expense Records
+/h3>
+/div>
+                    
+div class="card-body" style="padding:0;" id="expenseTableBody">
+/div>
+                
+/div>
+            
+/div>
+        
+/section>
+
+        
+!-- ===== USERS ===== -->
+        
+section class="page-section" id="page-users">
+            
+div class="page-content">
+                
+div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    
+div>
+h3 style="font-weight:700;">User Management
+/h3>
+p style="font-size:12px;color:var(--text-secondary);">Manage system users and assign roles
+/p>
+/div>
+                    
+button class="btn btn-primary" onclick="openModal('addUserModal')">
+i class="fas fa-user-plus">
+/i>Add User
+/button>
+                
+/div>
+                
+div class="card">
+                    
+div class="card-header">
+                        
+input type="text" class="form-input" placeholder="Search users..." style="width:220px;padding:7px 12px;font-size:12px;" id="userSearchInput" oninput="renderUserPage()">
+                        
+span style="font-size:12px;color:var(--text-secondary);" id="userCount">0 users
+/span>
+                    
+/div>
+                    
+div class="card-body" style="padding:0;" id="userTableBody">
+/div>
+                
+/div>
+            
+/div>
+        
+/section>
+
+        
+!-- ===== SETTINGS ===== -->
+        
+section class="page-section" id="page-settings">
+            
+div class="page-content">
+                
+div style="margin-bottom:18px;">
+h3 style="font-weight:700;">Settings
+/h3>
+p style="font-size:12px;color:var(--text-secondary);">Configure your ERP system
+/p>
+/div>
+                
+div class="grid-equal">
+                    
+div class="card">
+div class="card-header">
+h3>Business Information
+/h3>
+/div>
+div class="card-body">
+                        
+div class="form-grid">
+                            
+div class="form-group">
+label>Business Name
+/label>
+input type="text" class="form-input" id="setBizName" placeholder="Business name">
+/div>
+                            
+div class="form-group">
+label>Phone
+/label>
+input type="text" class="form-input" id="setBizPhone" placeholder="+254 7XX XXX XXX">
+/div>
+                            
+div class="form-group">
+label>Email
+/label>
+input type="email" class="form-input" id="setBizEmail" placeholder="email@example.com">
+/div>
+                            
+div class="form-group">
+label>Tax PIN
+/label>
+input type="text" class="form-input" id="setBizPIN" placeholder="Tax PIN">
+/div>
+                            
+div class="form-group full-width">
+label>Address
+/label>
+input type="text" class="form-input" id="setBizAddr" placeholder="Business address">
+/div>
+                            
+div class="form-group">
+label>Currency
+/label>
+select class="form-input" style="cursor:pointer;" id="setBizCurrency">
+option>KES - Kenyan Shilling
+/option>
+option>USD - US Dollar
+/option>
+option>EUR - Euro
+/option>
+option>GBP - British Pound
+/option>
+/select>
+/div>
+                            
+div class="form-group">
+label>Timezone
+/label>
+select class="form-input" style="cursor:pointer;" id="setBizTZ">
+option>Africa/Nairobi (EAT)
+/option>
+option>UTC
+/option>
+option>Europe/London (GMT)
+/option>
+/select>
+/div>
+                        
+/div>
+                        
+button class="btn btn-primary" style="margin-top:18px;" onclick="saveSettings()">
+i class="fas fa-save">
+/i>Save Changes
+/button>
+                    
+/div>
+/div>
+                    
+div class="card">
+div class="card-header">
+h3>Tax & Receipt
+/h3>
+/div>
+div class="card-body">
+                        
+div class="form-group">
+label>Default Tax Rate (%)
+/label>
+input type="number" class="form-input" id="setTaxRate" value="16">
+/div>
+                        
+div class="form-group">
+label>Tax Name
+/label>
+input type="text" class="form-input" id="setTaxName" value="VAT">
+/div>
+                        
+div class="form-group">
+label>Receipt Footer Message
+/label>
+textarea class="form-input" rows="3" id="setReceiptMsg" placeholder="Thank you for your purchase!" style="resize:vertical;">
+/textarea>
+/div>
+                        
+div style="padding:12px;background:rgba(14,116,144,0.08);border-radius:9px;display:flex;gap:9px;align-items:flex-start;margin-top:10px;">
+                            
+i class="fas fa-shield-alt" style="color:var(--primary);margin-top:2px;">
+/i>
+                            
+div style="font-size:12px;color:var(--text-secondary);">As Super Admin, you have full access to all settings and data. Changes affect the entire system.
+/div>
+                        
+/div>
+                        
+button class="btn btn-primary" style="margin-top:18px;" onclick="saveSettings()">
+i class="fas fa-save">
+/i>Save Tax Settings
+/button>
+                    
+/div>
+/div>
+                
+/div>
+            
+/div>
+        
+/section>
+    
+/main>
+
+/div>
+
+
+!-- ===================== MODALS ===================== -->
+
+
+!-- ADD PRODUCT -->
+
+div class="modal-overlay" id="addProductModal">
+    
+div class="modal">
+        
+div class="modal-header">
+h3 id="productModalTitle">Add New Product
+/h3>
+button class="modal-close" onclick="closeModal('addProductModal')">
+i class="fas fa-times">
+/i>
+/button>
+/div>
+        
+div class="modal-body">
+            
+input type="hidden" id="editProductId" value="">
+            
+div class="form-grid">
+                
+div class="form-group full-width">
+label>Product Name *
+/label>
+input type="text" class="form-input" id="pName" placeholder="Product name">
+/div>
+                
+div class="form-group">
+label>SKU *
+/label>
+input type="text" class="form-input" id="pSku" placeholder="SKU-001">
+/div>
+                
+div class="form-group">
+label>Category *
+/label>
+input type="text" class="form-input" id="pCategory" placeholder="e.g. Electronics, Accessories" list="catSuggestions">
+datalist id="catSuggestions">
+/datalist>
+/div>
+                
+div class="form-group">
+label>Selling Price *
+/label>
+input type="number" class="form-input" id="pPrice" placeholder="0.00" min="0" step="0.01">
+/div>
+                
+div class="form-group">
+label>Cost Price
+/label>
+input type="number" class="form-input" id="pCost" placeholder="0.00" min="0" step="0.01">
+/div>
+                
+div class="form-group">
+label>Stock Quantity *
+/label>
+input type="number" class="form-input" id="pStock" placeholder="0" min="0">
+/div>
+                
+div class="form-group">
+label>Min Stock Level
+/label>
+input type="number" class="form-input" id="pMinStock" placeholder="10" min="0" value="10">
+/div>
+                
+div class="form-group full-width">
+label>Description
+/label>
+textarea class="form-input" rows="2" id="pDesc" placeholder="Product description..." style="resize:vertical;">
+/textarea>
+/div>
+            
+/div>
+        
+/div>
+        
+div class="modal-footer">
+            
+button class="btn btn-outline" onclick="closeModal('addProductModal')">Cancel
+/button>
+            
+button class="btn btn-primary" onclick="saveProduct()">
+i class="fas fa-save">
+/i>Save Product
+/button>
+        
+/div>
+    
+/div>
+
+/div>
+
+
+!-- ADD CUSTOMER -->
+
+div class="modal-overlay" id="addCustomerModal">
+    
+div class="modal">
+        
+div class="modal-header">
+h3 id="customerModalTitle">Add Customer
+/h3>
+button class="modal-close" onclick="closeModal('addCustomerModal')">
+i class="fas fa-times">
+/i>
+/button>
+/div>
+        
+div class="modal-body">
+            
+input type="hidden" id="editCustId" value="">
+            
+div class="form-grid">
+                
+div class="form-group">
+label>First Name *
+/label>
+input type="text" class="form-input" id="cFirst" placeholder="First name">
+/div>
+                
+div class="form-group">
+label>Last Name *
+/label>
+input type="text" class="form-input" id="cLast" placeholder="Last name">
+/div>
+                
+div class="form-group">
+label>Email
+/label>
+input type="email" class="form-input" id="cEmail" placeholder="email@example.com">
+/div>
+                
+div class="form-group">
+label>Phone *
+/label>
+input type="text" class="form-input" id="cPhone" placeholder="+254 7XX XXX XXX">
+/div>
+                
+div class="form-group full-width">
+label>Address
+/label>
+input type="text" class="form-input" id="cAddress" placeholder="Customer address">
+/div>
+            
+/div>
+        
+/div>
+        
+div class="modal-footer">
+            
+button class="btn btn-outline" onclick="closeModal('addCustomerModal')">Cancel
+/button>
+            
+button class="btn btn-primary" onclick="saveCustomer()">
+i class="fas fa-save">
+/i>Save Customer
+/button>
+        
+/div>
+    
+/div>
+
+/div>
+
+
+!-- ADD USER -->
+
+div class="modal-overlay" id="addUserModal">
+    
+div class="modal">
+        
+div class="modal-header">
+h3 id="userModalTitle">Add User
+/h3>
+button class="modal-close" onclick="closeModal('addUserModal')">
+i class="fas fa-times">
+/i>
+/button>
+/div>
+        
+div class="modal-body">
+            
+input type="hidden" id="editUserId" value="">
+            
+div class="form-grid">
+                
+div class="form-group">
+label>First Name *
+/label>
+input type="text" class="form-input" id="uFirst" placeholder="First name">
+/div>
+                
+div class="form-group">
+label>Last Name *
+/label>
+input type="text" class="form-input" id="uLast" placeholder="Last name">
+/div>
+                
+div class="form-group">
+label>Email *
+/label>
+input type="email" class="form-input" id="uEmail" placeholder="email@example.com">
+/div>
+                
+div class="form-group">
+label>Password *
+/label>
+input type="password" class="form-input" id="uPassword" placeholder="Password">
+/div>
+                
+div class="form-group">
+label>Role *
+/label>
+select class="form-input" id="uRole" style="cursor:pointer;" onchange="applyRolePreset(this.value)">
+option>Super Admin
+/option>
+option>Admin
+/option>
+option>Manager
+/option>
+option>Cashier
+/option>
+option>Viewer
+/option>
+/select>
+/div>
+                
+div class="form-group">
+label>Status
+/label>
+select class="form-input" id="uStatus" style="cursor:pointer;">
+option>Active
+/option>
+option>Inactive
+/option>
+/select>
+/div>
+                
+div class="form-group full-width">
+label>Role Notes
+/label>
+input type="text" class="form-input" id="uNotes" placeholder="Optional role notes">
+/div>
+            
+/div>
+            
+div class="form-group full-width" style="margin-top:10px;">
+                
+label>Module Access
+/label>
+                
+div class="permission-grid" id="userPermissionGrid">
+/div>
+            
+/div>
+        
+/div>
+        
+div class="modal-footer">
+            
+button class="btn btn-outline" onclick="closeModal('addUserModal')">Cancel
+/button>
+            
+button class="btn btn-primary" onclick="saveUser()">
+i class="fas fa-save">
+/i>Save User
+/button>
+        
+/div>
+    
+/div>
+
+/div>
+
+
+!-- ADD STOCK -->
+
+div class="modal-overlay" id="addStockModal">
+    
+div class="modal">
+        
+div class="modal-header">
+h3>Add Stock
+/h3>
+button class="modal-close" onclick="closeModal('addStockModal')">
+i class="fas fa-times">
+/i>
+/button>
+/div>
+        
+div class="modal-body">
+            
+div class="form-group">
+label>Product *
+/label>
+select class="form-input" style="cursor:pointer;" id="stockProduct">
+/select>
+/div>
+            
+div class="form-grid">
+                
+div class="form-group">
+label>Quantity *
+/label>
+input type="number" class="form-input" id="stockQty" placeholder="0" min="1">
+/div>
+                
+div class="form-group">
+label>Cost per Unit
+/label>
+input type="number" class="form-input" id="stockCost" placeholder="0.00" min="0" step="0.01">
+/div>
+            
+/div>
+            
+div class="form-group">
+label>Supplier
+/label>
+input type="text" class="form-input" id="stockSupplier" placeholder="Supplier name">
+/div>
+            
+div class="form-group">
+label>Notes
+/label>
+textarea class="form-input" rows="2" id="stockNotes" placeholder="Optional notes..." style="resize:vertical;">
+/textarea>
+/div>
+        
+/div>
+        
+div class="modal-footer">
+            
+button class="btn btn-outline" onclick="closeModal('addStockModal')">Cancel
+/button>
+            
+button class="btn btn-primary" onclick="addStock()">
+i class="fas fa-save">
+/i>Add Stock
+/button>
+        
+/div>
+    
+/div>
+
+/div>
+
+
+!-- ADD EXPENSE -->
+
+div class="modal-overlay" id="addExpenseModal">
+    
+div class="modal">
+        
+div class="modal-header">
+h3>Add Expense
+/h3>
+button class="modal-close" onclick="closeModal('addExpenseModal')">
+i class="fas fa-times">
+/i>
+/button>
+/div>
+        
+div class="modal-body">
+            
+div class="form-group">
+label>Description *
+/label>
+input type="text" class="form-input" id="expDesc" placeholder="Expense description">
+/div>
+            
+div class="form-grid">
+                
+div class="form-group">
+label>Amount *
+/label>
+input type="number" class="form-input" id="expAmount" placeholder="0.00" min="0" step="0.01">
+/div>
+                
+div class="form-group">
+label>Category
+/label>
+select class="form-input" style="cursor:pointer;" id="expCategory">
+option>Rent
+/option>
+option>Salaries
+/option>
+option>Utilities
+/option>
+option>Suppliers
+/option>
+option>Maintenance
+/option>
+option>Transport
+/option>
+option>Other
+/option>
+/select>
+/div>
+                
+div class="form-group">
+label>Date
+/label>
+input type="date" class="form-input" id="expDate">
+/div>
+                
+div class="form-group">
+label>Status
+/label>
+select class="form-input" style="cursor:pointer;" id="expStatus">
+option>Paid
+/option>
+option>Pending
+/option>
+/select>
+/div>
+            
+/div>
+        
+/div>
+        
+div class="modal-footer">
+            
+button class="btn btn-outline" onclick="closeModal('addExpenseModal')">Cancel
+/button>
+            
+button class="btn btn-primary" onclick="saveExpense()">
+i class="fas fa-save">
+/i>Save Expense
+/button>
+        
+/div>
+    
+/div>
+
+/div>
+
+
+!-- CHECKOUT -->
+
+div class="modal-overlay" id="checkoutModal">
+    
+div class="modal" style="width:460px;">
+        
+div class="modal-header">
+h3>Complete Payment
+/h3>
+button class="modal-close" onclick="closeModal('checkoutModal')">
+i class="fas fa-times">
+/i>
+/button>
+/div>
+        
+div class="modal-body">
+            
+div style="text-align:center;margin-bottom:18px;">
+                
+div style="font-size:13px;color:var(--text-secondary);">Total Amount
+/div>
+                
+div style="font-size:34px;font-weight:900;color:var(--primary);font-family:'JetBrains Mono',sans-serif;" id="checkoutTotal">0.00
+/div>
+            
+/div>
+            
+div class="form-group">
+label>Payment Method
+/label>
+                
+div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:5px;">
+                    
+button class="btn btn-outline pm-btn active" onclick="selectPM(this,'Cash')" style="padding:12px;flex-direction:column;">
+i class="fas fa-money-bill-wave" style="font-size:18px;margin-bottom:3px;">
+/i>
+span style="font-size:10px;">Cash
+/span>
+/button>
+                    
+button class="btn btn-outline pm-btn" onclick="selectPM(this,'M-Pesa')" style="padding:12px;flex-direction:column;">
+i class="fas fa-mobile-alt" style="font-size:18px;margin-bottom:3px;">
+/i>
+span style="font-size:10px;">M-Pesa
+/span>
+/button>
+                    
+button class="btn btn-outline pm-btn" onclick="selectPM(this,'Card')" style="padding:12px;flex-direction:column;">
+i class="fas fa-credit-card" style="font-size:18px;margin-bottom:3px;">
+/i>
+span style="font-size:10px;">Card
+/span>
+/button>
+                
+/div>
+            
+/div>
+            
+div class="form-group" id="mpesaField" style="display:none;">
+label>M-Pesa Phone
+/label>
+input type="text" class="form-input" placeholder="+254 7XX XXX XXX">
+/div>
+            
+div class="form-group">
+label>Amount Tendered
+/label>
+input type="number" class="form-input" id="amountTendered" placeholder="0.00" min="0" step="0.01" oninput="calcChange()">
+/div>
+            
+div id="changeDisplay" style="display:none;padding:10px;border-radius:9px;text-align:center;">
+div style="font-size:11px;color:var(--text-secondary);">Change
+/div>
+div style="font-size:22px;font-weight:800;font-family:'JetBrains Mono',sans-serif;" id="changeAmount">0.00
+/div>
+/div>
+            
+div class="form-group" style="margin-top:10px;">
+label>Customer (Optional)
+/label>
+select class="form-input" style="cursor:pointer;" id="checkoutCustomer">
+option value="">Walk-in Customer
+/option>
+/select>
+/div>
+            
+div class="form-group">
+label>Discount (KES)
+/label>
+input type="number" class="form-input" id="checkoutDiscount" placeholder="0.00" min="0" value="0" oninput="updateCartTotals()">
+/div>
+        
+/div>
+        
+div class="modal-footer">
+            
+button class="btn btn-outline" onclick="closeModal('checkoutModal')">Cancel
+/button>
+            
+button class="btn btn-success" onclick="finalizeSale()">
+i class="fas fa-check-circle">
+/i>Complete Sale
+/button>
+        
+/div>
+    
+/div>
+
+/div>
+
+
+!-- RECEIPT -->
+
+div class="modal-overlay" id="receiptModal">
+    
+div class="modal" style="width:380px;">
+        
+div class="modal-header">
+h3>Sale Completed
+/h3>
+button class="modal-close" onclick="closeModal('receiptModal')">
+i class="fas fa-times">
+/i>
+/button>
+/div>
+        
+div class="modal-body">
+div class="receipt-preview" id="receiptContent">
+/div>
+/div>
+        
+div class="modal-footer">
+            
+button class="btn btn-outline" onclick="closeModal('receiptModal')">Close
+/button>
+            
+button class="btn btn-primary" onclick="printReceipt()">
+i class="fas fa-print">
+/i>Print Receipt
+/button>
+        
+/div>
+    
+/div>
+
+/div>
+
+
+!-- EDIT PRODUCT MODAL reuses addProductModal -->
+
+
+script>
+// ==================== DATA STORE ====================
+let DB = {
+    products: [],
+    customers: [],
+    sales: [],
+    expenses: [],
+    stockHistory: [],
+    activityLog: [],
+    settings: { name:'', phone:'', email:'', pin:'', address:'', currency:'KES', timezone:'Africa/Nairobi', taxRate:16, taxName:'VAT', receiptMsg:'Thank you for your purchase!' },
+    users: [],
+    nextUserId: 1,
+    nextProductId: 1,
+    nextCustId: 1,
+    nextSaleId: 1,
+    nextExpId: 1
+};
+
+let currentUser = null;
+const ALL_MODULES = [
+    {key:'dashboard',label:'Dashboard'},
+    {key:'pos',label:'POS'},
+    {key:'sales',label:'Sales'},
+    {key:'customers',label:'Customers'},
+    {key:'products',label:'Products'},
+    {key:'stock',label:'Stock'},
+    {key:'finance',label:'Finance'},
+    {key:'reporting',label:'Reporting'},
+    {key:'expenses',label:'Expenses'},
+    {key:'users',label:'User Management'},
+    {key:'settings',label:'Settings'}
+];
+const ROLE_MODULE_ACCESS = {
+    'Super Admin': ALL_MODULES.map(m=>m.key),
+    'Admin': ALL_MODULES.map(m=>m.key),
+    'Manager': ['dashboard','pos','sales','customers','products','stock','finance','reporting','expenses'],
+    'Cashier': ['dashboard','pos','sales','customers'],
+    'Viewer': ['dashboard','reporting','sales']
+};
+function getDefaultPermissions(role) { return ROLE_MODULE_ACCESS[role] ? [...ROLE_MODULE_ACCESS[role]] : [...ROLE_MODULE_ACCESS['Viewer']]; }
+function hasAccess(page) { return currentUser ? (currentUser.permissions||[]).includes(page) : false; }
+function renderSidebarNav() {
+    document.querySelectorAll('.nav-item').forEach(item=>{
+        const page = item.dataset.page;
+        if(!page) { item.style.display='flex'; return; }
+        item.style.display = hasAccess(page) ? 'flex' : 'none';
+    });
+}
+function updateSidebarUser() {
+    const avatar = document.querySelector('.sidebar-user .avatar');
+    const info = document.querySelector('.sidebar-user .u-info span');
+    const sub = document.querySelector('.sidebar-user .u-info small');
+    if(currentUser) {
+        avatar.textContent = (currentUser.firstName.charAt(0) || '') + (currentUser.lastName.charAt(0) || '');
+        info.innerHTML = `${currentUser.firstName} ${currentUser.lastName}${currentUser.role==='Super Admin'?` 
+span class="super-badge">SUPER
+/span>`:''}`;
+        sub.textContent = `${currentUser.role}`;
+    }
+}
+function applyRolePreset(role) {
+    const defaultPerms = getDefaultPermissions(role);
+    document.querySelectorAll('.permission-checkbox input[type="checkbox"]').forEach(cb=>{
+        cb.checked = defaultPerms.includes(cb.value);
+    });
+}
+function populateUserPermissionGrid() {
+    const container = document.getElementById('userPermissionGrid');
+    if(!container) return;
+    container.innerHTML = ALL_MODULES.map(m=>`
+label class="permission-checkbox">
+input type="checkbox" value="${m.key}"> ${m.label}
+/label>`).join('');
+}
+
+// Load from localStorage
+function loadDB() {
+    const saved = localStorage.getItem('olutajr_erp_db');
+    if (saved) { try { DB = JSON.parse(saved); } catch(e) {} }
+    DB.users = DB.users || [];
+    DB.nextUserId = DB.nextUserId || (DB.users.reduce((max,u)=>Math.max(max,u.id||0),0) + 1);
+    DB.users.forEach(u=>{
+        if(!u.permissions || !Array.isArray(u.permissions)) u.permissions = getDefaultPermissions(u.role || 'Viewer');
+        if(!u.password) u.password = 'admin';
+    });
+    if (DB.users.length === 0) {
+        DB.users.push({
+            id: DB.nextUserId++,
+            firstName: 'Super',
+            lastName: 'Admin',
+            email: 'admin@olutajr.com',
+            password: 'admin',
+            role: 'Super Admin',
+            permissions: getDefaultPermissions('Super Admin'),
+            status: 'Active',
+            joined: new Date().toISOString().split('T')[0]
+        });
+    }
+}
+function saveDB() { localStorage.setItem('olutajr_erp_db', JSON.stringify(DB)); }
+
+// ==================== STATE ====================
+let cart = [];
+let currentPosCat = 'all';
+let selectedPM = 'Cash';
+let revenueChartInst = null;
+let categoryChartInst = null;
+let reportRevChartInst = null;
+let reportPayChartInst = null;
+let reportsInitDone = false;
+
+// ==================== HELPERS ====================
+function fmt(n) { return (DB.settings.currency||'KES') + ' ' + Number(n||0).toLocaleString('en',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+function fmtDate(d) { return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+function fmtTime(d) { return new Date(d).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}); }
+function genSKU() { return 'SKU-' + String(DB.nextProductId).padStart(4,'0'); }
+function genInvoice() { return 'INV-' + String(DB.nextSaleId).padStart(4,'0'); }
+
+function showToast(msg, type='info') {
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    const icons = {success:'check-circle',danger:'exclamation-circle',warning:'exclamation-triangle',info:'info-circle'};
+    t.className = `toast toast-${type}`;
+    t.innerHTML = `
+i class="fas fa-${icons[type]||'info-circle'}">
+/i>${msg}`;
+    c.appendChild(t);
+    setTimeout(()=>t.remove(),3000);
+}
+
+function openModal(id) { document.getElementById(id).classList.add('active'); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+document.querySelectorAll('.modal-overlay').forEach(o=>{o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('active');});});
+
+function logActivity(text, icon='info-circle', color='var(--info)') {
+    DB.activityLog.unshift({ text, icon, color, time: new Date().toISOString() });
+    if (DB.activityLog.length > 50) DB.activityLog.pop();
+    saveDB();
+}
+
+// ==================== LOGIN ====================
+function handleLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('loginBtn');
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const password = document.getElementById('loginPassword').value;
+    const user = DB.users.find(u => u.email.toLowerCase() === email && u.password === password);
+
+    btn.innerHTML = '
+i class="fas fa-spinner fa-spin" style="margin-right:6px;">
+/i>Signing in...';
+    btn.disabled = true;
+
+    setTimeout(()=>{
+        if (!user || user.status !== 'Active') {
+            btn.innerHTML='
+i class="fas fa-sign-in-alt" style="margin-right:6px;">
+/i>Sign In';
+            btn.disabled=false;
+            showToast('Invalid email or password','danger');
+            return;
+        }
+
+        currentUser = user;
+        document.getElementById('loginPage').style.display='none';
+        document.getElementById('appLayout').classList.add('active');
+        renderSidebarNav();
+        updateSidebarUser();
+        initApp();
+        btn.innerHTML='
+i class="fas fa-sign-in-alt" style="margin-right:6px;">
+/i>Sign In';
+        btn.disabled=false;
+        showToast(`Welcome back, ${user.firstName}!`,'success');
+    },1000);
+    return false;
+}
+
+function handleLogout() {
+    document.getElementById('appLayout').classList.remove('active');
+    document.getElementById('loginPage').style.display='flex';
+    showToast('Logged out successfully','info');
+}
+
+// ==================== NAVIGATION ====================
+function switchPage(page) {
+    if(!hasAccess(page)) {
+        showToast('Access denied','danger');
+        return;
+    }
+    document.querySelectorAll('.page-section').forEach(s=>s.classList.remove('active'));
+    document.getElementById('page-'+page).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    const navEl = document.querySelector(`.nav-item[data-page="${page}"]`);
+    if(navEl) navEl.classList.add('active');
+    const titles = {dashboard:'Dashboard',pos:'Point of Sale',sales:'Sales History',customers:'Customers',products:'Products',stock:'Stock Management',finance:'Finance',reporting:'Reporting',expenses:'Expenses',users:'User Management',settings:'Settings'};
+    document.getElementById('pageTitle').textContent = titles[page]||page;
+    document.getElementById('breadcrumbCurrent').textContent = titles[page]||page;
+    document.getElementById('sidebar').classList.remove('open');
+    if(page==='dashboard') renderDashboard();
+    if(page==='pos') renderPOS();
+    if(page==='sales') renderSalesPage();
+    if(page==='customers') renderCustomerPage();
+    if(page==='products') renderProductPage();
+    if(page==='stock') renderStockPage();
+    if(page==='finance') renderFinancePage();
+    if(page==='reporting') renderReportingPage();
+    if(page==='expenses') renderExpensePage();
+    if(page==='users') renderUserPage();
+}
+
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
+// ==================== INIT APP ====================
+function initApp() {
+    loadDB();
+    populateCatSuggestions();
+    populateUserPermissionGrid();
+    renderDashboard();
+    renderPOS();
+}
+
+// ==================== DASHBOARD ====================
+function renderDashboard() {
+    const totalRev = DB.sales.reduce((s,x)=>s+x.total,0);
+    const totalSales = DB.sales.length;
+    const totalProducts = DB.products.length;
+    const totalStock = DB.products.reduce((s,x)=>s+x.stock,0);
+    const totalCustomers = DB.customers.length;
+    const lowStock = DB.products.filter(p=>p.stock>0&&p.stock
+=p.minStock).length;
+    const outStock = DB.products.filter(p=>p.stock===0).length;
+
+    document.getElementById('dashStats').innerHTML = `
+        
+div class="stat-card">
+div class="sc-header">
+div class="sc-icon" style="background:rgba(14,116,144,0.1);color:var(--primary)">
+i class="fas fa-dollar-sign">
+/i>
+/div>
+/div>
+div class="sc-value">${fmt(totalRev)}
+/div>
+div class="sc-label">Total Revenue
+/div>
+/div>
+        
+div class="stat-card">
+div class="sc-header">
+div class="sc-icon" style="background:rgba(5,150,105,0.1);color:var(--success)">
+i class="fas fa-shopping-cart">
+/i>
+/div>
+/div>
+div class="sc-value">${totalSales}
+/div>
+div class="sc-label">Total Sales
+/div>
+/div>
+        
+div class="stat-card">
+div class="sc-header">
+div class="sc-icon" style="background:rgba(217,119,6,0.1);color:var(--warning)">
+i class="fas fa-boxes-stacked">
+/i>
+/div>
+/div>
+div class="sc-value">${totalStock}
+/div>
+div class="sc-label">Units in Stock
+/div>
+/div>
+        
+div class="stat-card">
+div class="sc-header">
+div class="sc-icon" style="background:rgba(8,145,178,0.1);color:var(--info)">
+i class="fas fa-users">
+/i>
+/div>
+/div>
+div class="sc-value">${totalCustomers}
+/div>
+div class="sc-label">Customers
+/div>
+/div>
+    `;
+
+    // Recent Sales
+    const rs = document.getElementById('dashRecentSales');
+    if(DB.sales.length===0) {
+        rs.innerHTML='
+div class="empty-state" style="padding:30px;">
+i class="fas fa-receipt" style="font-size:36px;">
+/i>
+h4>No sales yet
+/h4>
+p>Start selling from the POS
+/p>
+button class="btn btn-primary btn-sm" onclick="switchPage(\'pos\')">
+i class="fas fa-cash-register">
+/i>Go to POS
+/button>
+/div>';
+    } else {
+        let html = '
+table class="data-table">
+thead>
+tr>
+th>Invoice
+/th>
+th>Customer
+/th>
+th>Amount
+/th>
+th>Status
+/th>
+/tr>
+/thead>
+tbody>';
+        DB.sales.slice(0,5).forEach(s=>{
+            const sc = s.status==='Paid'?'badge-success':s.status==='Pending'?'badge-warning':'badge-danger';
+            html+=`
+tr>
+td style="font-family:'JetBrains Mono';font-weight:600;">#${s.invoice}
+/td>
+td>${s.customer}
+/td>
+td style="font-weight:700;">${fmt(s.total)}
+/td>
+td>
+span class="badge ${sc}">${s.status}
+/span>
+/td>
+/tr>`;
+        });
+        html+='
+/tbody>
+/table>';
+        rs.innerHTML = html;
+    }
+
+    // Activity
+    const act = document.getElementById('dashActivity');
+    if(DB.activityLog.length===0) {
+        act.innerHTML='
+div class="empty-state" style="padding:30px;">
+i class="fas fa-clock" style="font-size:36px;">
+/i>
+h4>No activity yet
+/h4>
+p>Actions will appear here
+/p>
+/div>';
+    } else {
+        act.innerHTML = DB.activityLog.slice(0,6).map(a=>`
+div class="activity-item">
+div class="ai-icon" style="background:${a.color}15;color:${a.color}">
+i class="fas fa-${a.icon}">
+/i>
+/div>
+div>
+div class="ai-text">${a.text}
+/div>
+div class="ai-time">${fmtDate(a.time)} ${fmtTime(a.time)}
+/div>
+/div>
+/div>`).join('');
+    }
+
+    // Charts
+    renderDashCharts();
+}
+
+function renderDashCharts() {
+    // Revenue chart
+    const rCtx = document.getElementById('revenueChart').getContext('2d');
+    if(revenueChartInst) revenueChartInst.destroy();
+
+    // Group sales by day (last 7 days)
+    const days = [];
+    for(let i=6;i>=0;i--) {
+        const d = new Date(); d.setDate(d.getDate()-i);
+        days.push(d.toISOString().split('T')[0]);
+    }
+    const revByDay = days.map(d => DB.sales.filter(s=>s.date===d).reduce((sum,s)=>sum+s.total,0));
+    const expByDay = days.map(d => DB.expenses.filter(e=>e.date===d).reduce((sum,e)=>sum+e.amount,0));
+
+    revenueChartInst = new Chart(rCtx, {
+        type:'line',
+        data:{
+            labels: days.map(d=>fmtDate(d)),
+            datasets:[
+                {label:'Revenue',data:revByDay,borderColor:'#0e7490',backgroundColor:'rgba(14,116,144,0.08)',fill:true,tension:0.4,borderWidth:2.5,pointBackgroundColor:'#fff',pointBorderColor:'#0e7490',pointBorderWidth:2,pointRadius:4},
+                {label:'Expenses',data:expByDay,borderColor:'#f97316',backgroundColor:'rgba(249,115,22,0.05)',fill:true,tension:0.4,borderWidth:2,borderDash:[5,5],pointBackgroundColor:'#fff',pointBorderColor:'#f97316',pointBorderWidth:2,pointRadius:3}
+            ]
+        },
+        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,font:{family:'Inter',size:11}}}},scales:{y:{beginAtZero:true,ticks:{callback:v=>fmt(v),font:{family:'Inter',size:10},color:'#94a3b8'},grid:{color:'rgba(0,0,0,0.04)'}},x:{ticks:{font:{family:'Inter',size:10},color:'#94a3b8'},grid:{display:false}}}}
+    });
+
+    // Category chart
+    const cCtx = document.getElementById('categoryChart').getContext('2d');
+    if(categoryChartInst) categoryChartInst.destroy();
+
+    const catData = {};
+    DB.sales.forEach(s=>{
+        (s.items||[]).forEach(it=>{
+            const p = DB.products.find(x=>x.id===it.productId);
+            const cat = p ? p.category : 'Other';
+            catData[cat] = (catData[cat]||0) + it.qty * it.price;
+        });
+    });
+    const catLabels = Object.keys(catData);
+    const catValues = Object.values(catData);
+    const catColors = ['#0e7490','#f97316','#059669','#8b5cf6','#d97706','#dc2626','#0891b2','#7c3aed'];
+
+    if(catLabels.length===0) {
+        categoryChartInst = new Chart(cCtx,{type:'doughnut',data:{labels:['No Data'],datasets:[{data:[1],backgroundColor:['#e2e8f0'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11}}}}}});
+    } else {
+        categoryChartInst = new Chart(cCtx,{type:'doughnut',data:{labels:catLabels,datasets:[{data:catValues,backgroundColor:catColors.slice(0,catLabels.length),borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:14,font:{family:'Inter',size:11}}}}}});
+    }
+}
+
+// ==================== POS ====================
+function renderPOS() {
+    renderPosCats();
+    renderPosProducts();
+    renderCart();
+    updateCheckoutCustomerDD();
+    populateStockProductDD();
+}
+
+function renderPosCats() {
+    const cats = ['all',...new Set(DB.products.map(p=>p.category).filter(Boolean))];
+    document.getElementById('posCats').innerHTML = cats.map(c=>`
+button class="pos-cat-btn ${c===currentPosCat?'active':''}" onclick="filterPosCat('${c}',this)">${c==='all'?'All':c}
+/button>`).join('');
+}
+
+function filterPosCat(cat, btn) {
+    currentPosCat = cat;
+    document.querySelectorAll('.pos-cat-btn').forEach(b=>b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+    renderPosProducts();
+}
+
+function filterPosProducts() { renderPosProducts(); }
+
+function renderPosProducts() {
+    const q = (document.getElementById('posSearchInput')?.value||'').toLowerCase();
+    let prods = DB.products.filter(p=>{
+        const matchQ = !q || p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q);
+        const matchCat = currentPosCat==='all' || p.category===currentPosCat;
+        return matchQ && matchCat;
+    });
+    const grid = document.getElementById('posProductGrid');
+    if(prods.length===0) {
+        grid.innerHTML = '
+div class="empty-state" style="grid-column:1/-1;">
+i class="fas fa-box-open">
+/i>
+h4>No products found
+/h4>
+p>Add products to start selling
+/p>
+button class="btn btn-primary btn-sm" onclick="openModal(\'addProductModal\')">
+i class="fas fa-plus">
+/i>Add Product
+/button>
+/div>';
+        return;
+    }
+    grid.innerHTML = prods.map(p=>{
+        const out = p.stock===0;
+        const low = p.stock>0&&p.stock
+=p.minStock;
+        return `
+div class="pos-product-card ${out?'out-of-stock':''}" onclick="addToCart(${p.id})">
+            
+div class="pp-img">
+img src="https://picsum.photos/seed/p${p.id}/140/72.jpg" alt="${p.name}" loading="lazy">
+/div>
+            
+div class="pp-name">${p.name}
+/div>
+            
+div class="pp-price">${fmt(p.price)}
+/div>
+            
+div class="pp-stock" style="${out?'color:var(--danger)':low?'color:var(--warning)':''}">${out?'Out of stock':p.stock+' in stock'}
+/div>
+        
+/div>`;
+    }).join('');
+}
+
+function addToCart(pid) {
+    const p = DB.products.find(x=>x.id===pid);
+    if(!p||p.stock===0) return;
+    const ex = cart.find(c=>c.id===pid);
+    if(ex) {
+        if(ex.qty
+p.stock) { ex.qty++; } else { showToast('Maximum stock reached','warning'); return; }
+    } else {
+        cart.push({id:p.id, name:p.name, price:p.price, qty:1});
+    }
+    renderCart();
+    showToast(`${p.name} added`,'success');
+}
+
+function updateCartQty(pid, delta) {
+    const item = cart.find(c=>c.id===pid);
+    const p = DB.products.find(x=>x.id===pid);
+    if(!item) return;
+    item.qty += delta;
+    if(item.qty
+=0) cart=cart.filter(c=>c.id!==pid);
+    else if(item.qty>p.stock) { item.qty=p.stock; showToast('Maximum stock reached','warning'); }
+    renderCart();
+}
+
+function removeFromCart(pid) { cart=cart.filter(c=>c.id!==pid); renderCart(); }
+function clearCart() { cart=[]; renderCart(); }
+
+function renderCart() {
+    const container = document.getElementById('cartItems');
+    const summary = document.getElementById('cartSummary');
+    const actions = document.getElementById('cartActions');
+
+    if(cart.length===0) {
+        container.innerHTML = '
+div class="cart-empty">
+i class="fas fa-shopping-basket">
+/i>
+p>No items in cart
+/p>
+p style="font-size:10px;margin-top:3px;">Click products to add
+/p>
+/div>';
+        summary.style.display='none';
+        actions.style.display='none';
+        return;
+    }
+
+    container.innerHTML = cart.map(i=>`
+div class="cart-item">
+        
+div class="ci-info">
+div class="ci-name">${i.name}
+/div>
+div class="ci-price">${fmt(i.price)} each
+/div>
+/div>
+        
+div class="ci-qty">
+button onclick="updateCartQty(${i.id},-1)">
+i class="fas fa-minus">
+/i>
+/button>
+span>${i.qty}
+/span>
+button onclick="updateCartQty(${i.id},1)">
+i class="fas fa-plus">
+/i>
+/button>
+/div>
+        
+div class="ci-total">${fmt(i.price*i.qty)}
+/div>
+        
+div class="ci-remove" onclick="removeFromCart(${i.id})">
+i class="fas fa-times">
+/i>
+/div>
+    
+/div>`).join('');
+
+    updateCartTotals();
+    summary.style.display='block';
+    actions.style.display='flex';
+}
+
+function updateCartTotals() {
+    const summary = document.getElementById('cartSummary');
+    const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    const tax = Math.round(subtotal * (DB.settings.taxRate||16) / 100);
+    const discount = parseFloat(document.getElementById('checkoutDiscount')?.value||0);
+    const total = subtotal + tax - discount;
+    summary.innerHTML = `
+        
+div class="cs-row">
+span>Subtotal
+/span>
+span>${fmt(subtotal)}
+/span>
+/div>
+        
+div class="cs-row">
+span>${DB.settings.taxName||'VAT'} (${DB.settings.taxRate||16}%)
+/span>
+span>${fmt(tax)}
+/span>
+/div>
+        
+div class="cs-row">
+span>Discount
+/span>
+span style="color:var(--danger);">-${fmt(discount)}
+/span>
+/div>
+        
+div class="cs-total">
+span>Total
+/span>
+span>${fmt(total)}
+/span>
+/div>
+    `;
+}
+
+function getCartTotal() {
+    const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    const tax = Math.round(subtotal * (DB.settings.taxRate||16) / 100);
+    const discount = parseFloat(document.getElementById('checkoutDiscount')?.value||0);
+    return { subtotal, tax, discount, total: subtotal + tax - discount };
+}
+
+function holdOrder() { showToast('Order placed on hold','info'); }
+
+function completeSale() {
+    if(cart.length===0) return;
+    const {total} = getCartTotal();
+    document.getElementById('checkoutTotal').textContent = fmt(total);
+    document.getElementById('amountTendered').value='';
+    document.getElementById('checkoutDiscount').value='0';
+    document.getElementById('changeDisplay').style.display='none';
+    updateCheckoutCustomerDD();
+    openModal('checkoutModal');
+}
+
+function selectPM(btn, method) {
+    selectedPM = method;
+    document.querySelectorAll('.pm-btn').forEach(b=>{b.classList.remove('active');b.style.background='';b.style.color='';b.style.borderColor='';});
+    btn.classList.add('active');
+    btn.style.background='var(--primary)';btn.style.color='#fff';btn.style.borderColor='var(--primary)';
+    document.getElementById('mpesaField').style.display = method==='M-Pesa'?'block':'none';
+}
+
+function calcChange() {
+    const {total} = getCartTotal();
+    const tendered = parseFloat(document.getElementById('amountTendered').value)||0;
+    const change = tendered - total;
+    const cd = document.getElementById('changeDisplay');
+    const ca = document.getElementById('changeAmount');
+    if(tendered>0) {
+        cd.style.display='block';
+        if(change>=0) { ca.textContent=fmt(change);ca.style.color='var(--success)';cd.style.background='rgba(5,150,105,0.1)'; }
+        else { ca.textContent=fmt(Math.abs(change))+' short';ca.style.color='var(--danger)';cd.style.background='rgba(220,38,38,0.1)'; }
+    } else { cd.style.display='none'; }
+}
+
+function updateCheckoutCustomerDD() {
+    const sel = document.getElementById('checkoutCustomer');
+    sel.innerHTML = '
+option value="">Walk-in Customer
+/option>' + DB.customers.map(c=>`
+option value="${c.id}">${c.firstName} ${c.lastName}
+/option>`).join('');
+}
+
+function finalizeSale() {
+    const {subtotal, tax, discount, total} = getCartTotal();
+    const tendered = parseFloat(document.getElementById('amountTendered').value)||0;
+
+    if(selectedPM==='Cash' && tendered
+total) { showToast('Amount tendered is insufficient','danger'); return; }
+
+    const custId = document.getElementById('checkoutCustomer').value;
+    const custName = custId ? (DB.customers.find(c=>c.id==custId)?.firstName||'') + ' ' + (DB.customers.find(c=>c.id==custId)?.lastName||'') : 'Walk-in Customer';
+    const invoice = genInvoice();
+    const change = selectedPM==='Cash'? Math.max(0,tendered-total) : 0;
+
+    // Build sale items
+    const saleItems = cart.map(i=>{
+        const p = DB.products.find(x=>x.id===i.id);
+        return { productId:i.id, name:i.name, price:i.price, qty:i.qty, total:i.price*i.qty };
+    });
+
+    // Deduct stock
+    cart.forEach(i=>{
+        const p = DB.products.find(x=>x.id===i.id);
+        if(p) { p.stock = Math.max(0, p.stock - i.qty); }
+    });
+
+    // Record sale
+    DB.sales.unshift({
+        id: DB.nextSaleId++,
+        invoice,
+        customer: custName,
+        customerId: custId || null,
+        date: new Date().toISOString().split('T')[0],
+        time: new Date().toISOString(),
+        items: saleItems,
+        subtotal, tax, discount, total,
+        payment: selectedPM,
+        tendered: selectedPM==='Cash'?tendered:total,
+        change,
+        status: 'Paid'
+    });
+
+    // Update customer purchase total
+    if(custId) {
+        const cust = DB.customers.find(c=>c.id==custId);
+        if(cust) { cust.totalPurchases = (cust.totalPurchases||0) + total; cust.points = Math.floor((cust.totalPurchases||0)/100); }
+    }
+
+    logActivity(`Sale 
+strong>#${invoice}
+/strong> completed â€” ${fmt(total)} via ${selectedPM}`, 'receipt', 'var(--success)');
+
+    // Generate receipt
+    const receiptHTML = `
+        
+div class="r-center">
+            
+h4>${DB.settings.name||'OLUTAJR ERP'}
+/h4>
+            
+div>${DB.settings.address||'Business Address'}
+/div>
+            
+div>${DB.settings.phone||'Phone'}
+/div>
+            ${DB.settings.pin?`
+div>PIN: ${DB.settings.pin}
+/div>`:''}
+            
+div class="r-line">
+/div>
+            
+div style="font-weight:700;">RECEIPT
+/div>
+            
+div>#${invoice}
+/div>
+            
+div>${fmtDate(new Date())} ${fmtTime(new Date())}
+/div>
+        
+/div>
+        
+div class="r-line">
+/div>
+        ${saleItems.map(i=>`
+div class="r-row">
+span>${i.name} x${i.qty}
+/span>
+span>${fmt(i.total)}
+/span>
+/div>`).join('')}
+        
+div class="r-line">
+/div>
+        
+div class="r-row">
+span>Subtotal
+/span>
+span>${fmt(subtotal)}
+/span>
+/div>
+        
+div class="r-row">
+span>${DB.settings.taxName||'VAT'} ${DB.settings.taxRate||16}%
+/span>
+span>${fmt(tax)}
+/span>
+/div>
+        ${discount>0?`
+div class="r-row">
+span>Discount
+/span>
+span>-${fmt(discount)}
+/span>
+/div>`:''}
+        
+div class="r-row" style="font-weight:700;font-size:13px;">
+span>TOTAL
+/span>
+span>${fmt(total)}
+/span>
+/div>
+        
+div class="r-line">
+/div>
+        
+div class="r-row">
+span>Payment
+/span>
+span>${selectedPM}
+/span>
+/div>
+        ${selectedPM==='Cash'?`
+div class="r-row">
+span>Tendered
+/span>
+span>${fmt(tendered)}
+/span>
+/div>
+div class="r-row">
+span>Change
+/span>
+span>${fmt(change)}
+/span>
+/div>`:''}
+        
+div class="r-line">
+/div>
+        
+div class="r-center" style="font-size:10px;">
+            
+div>${DB.settings.receiptMsg||'Thank you for your purchase!'}
+/div>
+        
+/div>
+    `;
+    document.getElementById('receiptContent').innerHTML = receiptHTML;
+
+    saveDB();
+    closeModal('checkoutModal');
+    openModal('receiptModal');
+
+    cart = [];
+    renderCart();
+    renderPosProducts();
+    showToast('Sale completed successfully!','success');
+}
+
+function printReceipt() {
+    const content = document.getElementById('receiptContent').innerHTML;
+    const w = window.open('','','width=350,height=600');
+    w.document.write(`
+html>
+head>
+title>Receipt
+/title>
